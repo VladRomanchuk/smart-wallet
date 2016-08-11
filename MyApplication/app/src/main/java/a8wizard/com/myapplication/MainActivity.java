@@ -1,6 +1,9 @@
 package a8wizard.com.myapplication;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -45,5 +48,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showScreen(Fragment fragment, String contentTag, boolean addToBackStack) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        // TODO: 7/28/16 make change animation
+
+        if (addToBackStack) {
+            transaction.addToBackStack(String.valueOf(System.identityHashCode(fragment)));
+        }
+        transaction.replace(R.id.main_frame_layout, fragment, contentTag);
+        transaction.commitAllowingStateLoss();
+        fm.executePendingTransactions();
     }
 }

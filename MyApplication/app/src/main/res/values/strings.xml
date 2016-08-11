@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="add_new_transaction">Add new transaction</string>
 </resources>
