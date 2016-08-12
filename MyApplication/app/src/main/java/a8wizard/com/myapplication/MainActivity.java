@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import a8wizard.com.myapplication.transactions.AddTransactionFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -47,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.search:
+                showScreen(new AddTransactionFragment(), AddTransactionFragment.TAG, false);
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 

@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#62c2cc</color>
     <color name="colorAccent">#FDB813</color>
     <color name="colorBackground">#99fdb813</color>
+    <color name="colorButtonTransactions">#f17022</color>
+    <color name="colorItems">#fdd471</color>
 </resources>

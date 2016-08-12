@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="add_new_transaction">Add new transaction</string>
+    <string name="menu_item_search">Search</string>
+    <string name="menu_item_setting">Setting</string>
+    <string name="transaction_item_text_view_price">Price</string>
+    <string name="transaction_item_text_view_description">Description</string>
+    <string name="transaction_item_text_vew_date">09.08.2016</string>
+    <string name="transaction_item_text_view_time">10:10 a.m.</string>
 </resources>
