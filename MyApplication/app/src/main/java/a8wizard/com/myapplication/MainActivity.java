@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     public void showScreen(Fragment fragment, String contentTag, boolean addToBackStack) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        // TODO: 7/28/16 make change animation
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
 
         if (addToBackStack) {
             transaction.addToBackStack(String.valueOf(System.identityHashCode(fragment)));

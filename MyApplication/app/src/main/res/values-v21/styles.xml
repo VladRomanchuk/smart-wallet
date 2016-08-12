@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+                <item name="colorPrimary">@color/colorPrimary</item>
+                <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+                <item name="colorAccent">@color/colorAccent</item>
+                <item name="android:colorBackground">@color/colorBackground</item>
+        </style>
+
+        <style name="MyDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+                <!-- this is new -->
+                <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
+                <item name="android:colorAccent">@color/colorPrimary</item>
+        </style>
+
+        <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.Light.DatePicker">
+                <item name="android:headerBackground">@color/colorPrimary</item>
+                <item name="android:calendarTextColor">@android:color/black</item>
+                <item name="android:dayOfWeekBackground">@color/colorAccent</item>
+               <item name="android:datePickerMode">calendar</item>
+                <item name="android:minDate">01/01/2000</item>
+        </style>
+</resources>
