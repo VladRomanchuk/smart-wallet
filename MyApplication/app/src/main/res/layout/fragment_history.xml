@@ -1,0 +1,121 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorItems">
+
+        <TableRow
+            android:paddingTop="10dp"
+            android:id="@+id/title_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5sp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/history_time_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0.5sp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:paddingLeft="16sp"
+                android:text="@string/time_history_row"
+                android:textColor="#777777"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/history_description_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0.5sp"
+                android:layout_marginRight="0.5sp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="@string/description_history_row"
+                android:textColor="#777777"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/history_bill_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0.5sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingRight="16sp"
+                android:text="@string/bill_history_row"
+                android:textColor="#777777"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <EditText
+            android:id="@+id/search_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:ems="10"
+            android:hint="search"
+            android:textColor="#333333"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="0sp"
+            android:layout_below="@+id/search_edit_text"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#333333"
+            android:visibility="invisible" />
+
+        <ListView
+            android:id="@+id/list_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button_bottom"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView1"
+            android:layout_marginTop="10dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="4dp" />
+
+        <LinearLayout
+            android:id="@+id/button_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/history_back_button"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="Back"
+                android:drawableLeft="@drawable/ic_back"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:textSize="15sp"
+                android:background="@color/colorBackButton"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/search_back_button"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_search"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:background="@color/colorButtonTransactions"
+                android:text="@string/menu_item_search"
+                android:textSize="15sp"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

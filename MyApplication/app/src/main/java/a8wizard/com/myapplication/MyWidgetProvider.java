@@ -49,7 +49,7 @@ public class MyWidgetProvider extends AppWidgetProvider {
 			} else {
 				views.setTextViewText(R.id.textView1, "Budget left");
 				views.setTextViewText(R.id.textView2,
-						Util.formatUang(helper.getDetailLastBudget().getLeft()));
+						Util.formatUSD(helper.getDetailLastBudget().getLeft()));
 				views.setTextViewText(R.id.textView3, Util.getDateString(helper
 						.getDetailLastBudget().getTimeStartDate(),
 						new SimpleDateFormat("dd/MM/yyyy kk:mm:ss")));

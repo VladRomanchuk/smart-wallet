@@ -11,8 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-import a8wizard.com.myapplication.transactions.AddTransactionFragment;
-import a8wizard.com.myapplication.transactions.BudgetItem;
+import a8wizard.com.myapplication.statistic.BudgetItem;
 
 
 public class Util {
@@ -26,27 +25,27 @@ public class Util {
         }
     }
 
-    public static String formatUang(String nominal){
-        char c[]=nominal.toCharArray();
-        String hasil="";
-        int i=c.length-1;
-        int three_char=0;
-        while (i>=0) {
-            hasil=c[i]+hasil;
+    public static String formatUSD(String nominal) {
+        char c[] = nominal.toCharArray();
+        String hasil = "";
+        int i = c.length - 1;
+        int three_char = 0;
+        while (i >= 0) {
+            hasil = c[i] + hasil;
             three_char++;
-            if(three_char==3){
-                hasil="."+hasil;
-                three_char=0;
+            if (three_char == 3) {
+                hasil = "." + hasil;
+                three_char = 0;
             }
             i--;
         }
-        return "$"+hasil;
+        return "$" + hasil;
     }
 
-    public static void refreshTimePickerAtAddTransactionFragment(){
-        AddTransactionFragment.datePickerTextView.setText(new SimpleDateFormat("kk:mm:ss").format(new Date()));
-        //AddTransactionFragment.bDatePicker.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-    }
+//    public static void refreshTimePickerAtAddTransactionFragment(){
+//        AddTransactionFragment.transactionDatePickerTextView.setText(new SimpleDateFormat("kk:mm:ss").format(new Date()));
+//        //AddTransactionFragment.bDatePicker.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+//    }
 
     public static boolean checkTransactionDateInBudget(long tglTime, BudgetItem budget) {
 
@@ -68,12 +67,12 @@ public class Util {
 
     }
 
-    public static boolean budgetIsMoreThanZero(int idBudget, long amount, Context context){
+    public static boolean budgetIsMoreThanZero(int idBudget, long amount, Context context) {
         SQLHelper helper = new SQLHelper(context);
 
         BudgetItem budget = helper.getDetailBudget(idBudget);
 
-        if((Long.parseLong(budget.getLeft()) - amount) > 0){
+        if ((Long.parseLong(budget.getLeft()) - amount) > 0) {
             return true;
         }
 
@@ -130,7 +129,7 @@ public class Util {
                 MyWidgetProvider.class);
 
         remoteViews.setTextViewText(R.id.textView1, "Sisa budget");
-        remoteViews.setTextViewText(R.id.textView2, Util.formatUang(helper
+        remoteViews.setTextViewText(R.id.textView2, Util.formatUSD(helper
                 .getDetailLastBudget().getLeft()));
         remoteViews.setTextViewText(R.id.textView3, Util.getDateString(helper
                         .getDetailLastBudget().getTimeStartDate(),

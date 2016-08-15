@@ -7,4 +7,7 @@
     <string name="transaction_item_text_view_description">Description</string>
     <string name="transaction_item_text_vew_date">09.08.2016</string>
     <string name="transaction_item_text_view_time">10:10 a.m.</string>
+    <string name="time_history_row">Time</string>
+    <string name="description_history_row">Description</string>
+    <string name="bill_history_row">Bill</string>
 </resources>

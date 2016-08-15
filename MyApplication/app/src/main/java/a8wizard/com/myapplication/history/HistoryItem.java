@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication.transactions;
+package a8wizard.com.myapplication.history;
 
 public class HistoryItem {
 	private String tanggal;

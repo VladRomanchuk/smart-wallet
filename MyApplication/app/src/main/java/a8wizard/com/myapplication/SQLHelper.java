@@ -10,8 +10,8 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import a8wizard.com.myapplication.transactions.BudgetItem;
-import a8wizard.com.myapplication.transactions.HistoryItem;
+import a8wizard.com.myapplication.statistic.BudgetItem;
+import a8wizard.com.myapplication.history.HistoryItem;
 import a8wizard.com.myapplication.transactions.TransactionItem;
 
 public class SQLHelper extends SQLiteOpenHelper {
@@ -77,7 +77,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     }
 
-    public void updateBudgetByDate(String tgl, long amount) {
+    public void updateBudgetByDate(String tgl, double amount) {
         ArrayList<BudgetItem> budgets = getAllBudget();
 
         long tglTime = Util.getTimeStamp(tgl, new SimpleDateFormat(
@@ -89,15 +89,11 @@ public class SQLHelper extends SQLiteOpenHelper {
                     amount = Math.abs(amount);
 
                     updateBudgetDifference(budgets.get(i).getIdBudget(), amount);
-                    // Toast.makeText(context,
-                    // "diff" + budgets.get(i).getIdBudget(),
-                    // Toast.LENGTH_SHORT).show();
+
                 } else {
                     amount = Math.abs(amount);
                     updateBudgetSum(budgets.get(i).getIdBudget(), amount);
-                    // Toast.makeText(context,
-                    // "sum" + budgets.get(i).getIdBudget(),
-                    // Toast.LENGTH_SHORT).show();
+
                 }
 
                 Toast.makeText(context, "BudgetItem has been updated",
@@ -107,8 +103,6 @@ public class SQLHelper extends SQLiteOpenHelper {
 
         }
     }
-
-
 
     public int getIdBudgetByDateTransaction(long tglTime) {
         ArrayList<BudgetItem> budgets = getAllBudget();
@@ -133,7 +127,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         for (int i = 0; i < trans.size(); i++) {
             updateBudgetByDate(trans.get(i).getTanggal() + " "
                             + trans.get(i).getJam(),
-                    Long.parseLong(trans.get(i).getHarga()));
+                    Double.parseDouble(trans.get(i).getHarga()));
 
         }
         if (trans.size() > 0)
@@ -186,7 +180,6 @@ public class SQLHelper extends SQLiteOpenHelper {
             Util.updateWidget(context);
 
         db.close();
-
 
     }
 
@@ -284,7 +277,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     }
 
-    public void updateBudgetDifference(int idBudget, long amount) {
+    public void updateBudgetDifference(int idBudget, double amount) {
         SQLiteDatabase db = this.getWritableDatabase();
 
 
@@ -297,7 +290,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 
 
 
-    public void updateBudgetSum(int idBudget, long amount) {
+    public void updateBudgetSum(int idBudget, double amount) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("update tbl_budget set left=left+" + amount
                 + " where idBudget=" + idBudget + "");
@@ -305,7 +298,7 @@ public class SQLHelper extends SQLiteOpenHelper {
             Util.updateWidget(context);
     }
 
-    public TransactionItem getDetailTransaksi(int idTransaksi) {
+    public TransactionItem getDetailTransactions(int idTransaksi) {
 
         // 1. build the query
         // String query = "select * from tbl_friendlist";
@@ -334,13 +327,8 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     public ArrayList<HistoryItem> getAllHistory() {
         ArrayList<HistoryItem> history = new ArrayList<HistoryItem>();
-        // 1. build the query
-        // String query = "select * from tbl_friendlist";
 
         String query = "select distinct data, sum(price) total, count(*) sum from tbl_transactions GROUP BY data order by time asc";
-        // String query =
-        // "select distinct strftime('%d-%m-%Y', data / 1000, 'unixepoch') data, sum(price) total, count(*) sum from tbl_transaksi GROUP BY data order by data asc";
-        // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
@@ -393,13 +381,9 @@ public class SQLHelper extends SQLiteOpenHelper {
 
 
         String query = "select distinct substr(data,7,4) data, sum(price) total, count(*) sum from tbl_transactions GROUP BY data order by time asc";
-        // String query =
-        // "select distinct strftime('%d-%m-%Y', data / 1000, 'unixepoch') data, sum(price) total, count(*) sum from tbl_transaksi GROUP BY data order by data asc";
-        // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
         HistoryItem hist = null;
         if (cursor.moveToFirst()) {
             do {
