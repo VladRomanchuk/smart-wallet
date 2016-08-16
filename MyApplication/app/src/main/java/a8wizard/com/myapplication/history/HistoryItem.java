@@ -1,23 +1,23 @@
 package a8wizard.com.myapplication.history;
 
 public class HistoryItem {
-	private String tanggal;
+	private String date;
 	private String total;
-	private String jumlah;
+	private String sum;
 
-	public HistoryItem(String tanggal, String total, String jumlah) {
+	public HistoryItem(String date, String total, String jumlah) {
 		super();
-		this.tanggal = tanggal;
+		this.date = date;
 		this.total = total;
-		this.jumlah = jumlah;
+		this.sum = jumlah;
 	}
 
-	public String getTanggal() {
-		return tanggal;
+	public String getDate() {
+		return date;
 	}
 
-	public void setTanggal(String tanggal) {
-		this.tanggal = tanggal;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	public String getTotal() {
@@ -28,12 +28,12 @@ public class HistoryItem {
 		this.total = total;
 	}
 
-	public String getJumlah() {
-		return jumlah;
+	public String getSum() {
+		return sum;
 	}
 
-	public void setJumlah(String jumlah) {
-		this.jumlah = jumlah;
+	public void setSum(String sum) {
+		this.sum = sum;
 	}
 
 }

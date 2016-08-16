@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showStatisticScreen();
                 break;
         }
-
     }
 
     public void showScreen(Fragment fragment, String contentTag, boolean addToBackStack) {
@@ -106,15 +105,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fm.executePendingTransactions();
     }
 
-    private void showTransactionScreen() {
+    public  void showTransactionScreen() {
         showScreen(new AddTransactionFragment(), AddTransactionFragment.TAG, false);
+        findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorItems));
     }
 
     private void showHistoryScreen() {
         showScreen(new HistoryFragment(), HistoryFragment.TAG, false);
+        findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.white));
+
     }
 
     private void showStatisticScreen() {
         showScreen(new StatisticFragment(), StatisticFragment.TAG, false);
+        findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.white));
     }
 }

@@ -42,15 +42,15 @@ public class MyWidgetProvider extends AppWidgetProvider {
 			views.setOnClickPendingIntent(R.id.linearLayout1, pendingIntent);
 			
 			if (!Util.checkBudget(context)) {
-				views.setTextViewText(R.id.textView1, "");
-				views.setTextViewText(R.id.textView2, "Buget not set");
-				views.setTextViewText(R.id.textView3, "");
+				views.setTextViewText(R.id.time_row, "");
+				views.setTextViewText(R.id.description_row, "Buget not set");
+				views.setTextViewText(R.id.bill_row, "");
 				views.setTextViewText(R.id.textView4, "");
 			} else {
-				views.setTextViewText(R.id.textView1, "Budget left");
-				views.setTextViewText(R.id.textView2,
+				views.setTextViewText(R.id.time_row, "Budget left");
+				views.setTextViewText(R.id.description_row,
 						Util.formatUSD(helper.getDetailLastBudget().getLeft()));
-				views.setTextViewText(R.id.textView3, Util.getDateString(helper
+				views.setTextViewText(R.id.bill_row, Util.getDateString(helper
 						.getDetailLastBudget().getTimeStartDate(),
 						new SimpleDateFormat("dd/MM/yyyy kk:mm:ss")));
 

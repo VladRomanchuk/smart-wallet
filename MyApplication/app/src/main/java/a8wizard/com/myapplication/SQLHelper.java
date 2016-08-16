@@ -125,9 +125,9 @@ public class SQLHelper extends SQLiteOpenHelper {
 		 * Toast.LENGTH_SHORT) .show();
 		 */
         for (int i = 0; i < trans.size(); i++) {
-            updateBudgetByDate(trans.get(i).getTanggal() + " "
-                            + trans.get(i).getJam(),
-                    Double.parseDouble(trans.get(i).getHarga()));
+            updateBudgetByDate(trans.get(i).getDate() + " "
+                            + trans.get(i).getTime(),
+                    Long.parseLong(trans.get(i).getPrice()));
 
         }
         if (trans.size() > 0)
@@ -402,13 +402,13 @@ public class SQLHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         // values.put("idTransaksi", "");
-        values.put("description", transactionItem.getDeskripsi());
-        values.put("price", transactionItem.getHarga());
-        values.put("clock", transactionItem.getJam());
-        values.put("data", transactionItem.getTanggal());
+        values.put("description", transactionItem.getDescription());
+        values.put("price", transactionItem.getPrice());
+        values.put("clock", transactionItem.getTime());
+        values.put("data", transactionItem.getDate());
         values.put("time", transactionItem.getTime());
         db.insert(TBL_TRANSACTIONS, null, values);
-        Toast.makeText(context, "TransactionItem has been added",
+        Toast.makeText(context, "TransactionItem has been added ",
                 Toast.LENGTH_SHORT).show();
 
         db.close();
@@ -460,11 +460,11 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     public void updateTransaction(TransactionItem transactionItem) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("update tbl_transactions set clock='" + transactionItem.getJam()
-                + "',data='" + transactionItem.getTanggal() + "',price='"
-                + transactionItem.getHarga() + "',description='"
-                + transactionItem.getDeskripsi() + "',time=" + transactionItem.getTime()
-                + " where idTransactions='" + transactionItem.getIdTransaksi() + "'");
+        db.execSQL("update tbl_transactions set clock='" + transactionItem.getTime()
+                + "',data='" + transactionItem.getDate() + "',price='"
+                + transactionItem.getPrice() + "',description='"
+                + transactionItem.getDescription() + "',time=" + transactionItem.getTime()
+                + " where idTransactions='" + transactionItem.getIdTransaction() + "'");
         Toast.makeText(context, "TransactionItem has been edited", Toast.LENGTH_SHORT)
                 .show();
     }

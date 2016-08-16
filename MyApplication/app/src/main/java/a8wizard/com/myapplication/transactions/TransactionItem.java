@@ -1,70 +1,71 @@
 package a8wizard.com.myapplication.transactions;
 
 public class TransactionItem {
-	private int idTransaksi;
-	private String deskripsi;
-	private String harga;
-	private String jam;
-	private String tanggal;
-	private long time;
+	private int idTransaction;
+	private String description;
+	private String price;
 
-	public TransactionItem(int idTransaksi, String deskripsi, String harga,
-						   String jam, String tanggal, long time) {
-		super();
-		this.idTransaksi = idTransaksi;
-		this.deskripsi = deskripsi;
-		this.harga = harga;
-		this.jam = jam;
-		this.tanggal = tanggal;
-		this.time = time;
-	}
-
-	public long getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(long time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
-	public int getIdTransaksi() {
-		return idTransaksi;
+	private String time;
+	private String date;
+	private long timeL;
+
+	public TransactionItem(int idTransaction, String description, String price,
+					 String time, String date, long timeL) {
+		super();
+		this.idTransaction = idTransaction;
+		this.description = description;
+		this.price = price;
+		this.time = time;
+		this.date = date;
+		this.timeL = timeL;
 	}
 
-	public void setIdTransaksi(int idTransaksi) {
-		this.idTransaksi = idTransaksi;
+	public long getTimeL() {
+		return timeL;
 	}
 
-	public String getDeskripsi() {
-		return deskripsi;
+	public void setTimeL(long timeL) {
+		this.timeL = timeL;
 	}
 
-	public void setDeskripsi(String deskripsi) {
-		this.deskripsi = deskripsi;
+	public int getIdTransaction() {
+		return idTransaction;
 	}
 
-	public String getHarga() {
-		return harga;
+	public void setIdTransaction(int idTransaction) {
+		this.idTransaction = idTransaction;
 	}
 
-	public void setHarga(String harga) {
-		this.harga = harga;
+	public String getDescription() {
+		return description;
 	}
 
-	public String getJam() {
-		return jam;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public void setJam(String jam) {
-		this.jam = jam;
+	public String getPrice() {
+		return price;
 	}
 
-	public String getTanggal() {
-		return tanggal;
+	public void setPrice(String price) {
+		this.price = price;
 	}
 
-	public void setTanggal(String tanggal) {
-		this.tanggal = tanggal;
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 }

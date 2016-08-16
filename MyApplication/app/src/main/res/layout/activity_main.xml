@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main_layout"
     android:background="@color/colorItems"
     android:orientation="vertical">
 
@@ -25,7 +26,7 @@
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/add_transaction"/>
         </LinearLayout>
@@ -39,7 +40,7 @@
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:src="@drawable/history"/>
         </LinearLayout>
 
@@ -52,7 +53,7 @@
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:src="@drawable/statistic"/>
         </LinearLayout>
     </LinearLayout>

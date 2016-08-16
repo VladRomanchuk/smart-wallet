@@ -34,7 +34,7 @@ public class Util {
             hasil = c[i] + hasil;
             three_char++;
             if (three_char == 3) {
-                hasil = "." + hasil;
+                hasil = hasil;
                 three_char = 0;
             }
             i--;
@@ -128,10 +128,10 @@ public class Util {
         ComponentName thisWidget = new ComponentName(context,
                 MyWidgetProvider.class);
 
-        remoteViews.setTextViewText(R.id.textView1, "Sisa budget");
-        remoteViews.setTextViewText(R.id.textView2, Util.formatUSD(helper
+        remoteViews.setTextViewText(R.id.time_row, "Sisa budget");
+        remoteViews.setTextViewText(R.id.description_row, Util.formatUSD(helper
                 .getDetailLastBudget().getLeft()));
-        remoteViews.setTextViewText(R.id.textView3, Util.getDateString(helper
+        remoteViews.setTextViewText(R.id.bill_row, Util.getDateString(helper
                         .getDetailLastBudget().getTimeStartDate(),
                 new SimpleDateFormat("dd/MM/yyyy kk:mm:ss")));
         remoteViews.setTextViewText(R.id.textView4, Util.getDateString(helper

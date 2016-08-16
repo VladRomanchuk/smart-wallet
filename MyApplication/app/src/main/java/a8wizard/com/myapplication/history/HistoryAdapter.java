@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnLongClickListener;
@@ -59,18 +60,21 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View rowView = inflater.inflate(R.layout.rowhistory_layout, parent,
-                false);
-        RelativeLayout selector = (RelativeLayout) rowView
-                .findViewById(R.id.relativeLayout1);
+        View rowView = inflater.inflate(R.layout.rowhistory_layout, parent, false);
+        RelativeLayout selector = (RelativeLayout) rowView.findViewById(R.id.row_layout);
 
+        if ((position % 2) == 0) {
+            rowView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorItems));
+        }else{
+            rowView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorItemSecond));
+        }
         TextView tanggal = (TextView) rowView.findViewById(R.id.textView1);
         TextView total = (TextView) rowView.findViewById(R.id.textView2);
         TextView jumlah = (TextView) rowView.findViewById(R.id.textView3);
 
-        tanggal.setText((itemsArrayList.get(position).getTanggal()));
-        total.setText(Util.formatUSD(itemsArrayList.get(position).getTotal()));
-        jumlah.setText(itemsArrayList.get(position).getJumlah());
+        tanggal.setText((itemsArrayList.get(position).getDate()));
+        total.setText(itemsArrayList.get(position).getSum());
+        jumlah.setText( Util.formatUSD(itemsArrayList.get(position).getTotal()));
 
         selector.setOnClickListener(new View.OnClickListener() {
 
@@ -82,7 +86,7 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
                 SQLHelper helper = new SQLHelper(context);
 
                 listTransaksi = helper.getAllTransactionByTanggal(itemsArrayList
-                        .get(position).getTanggal());
+                        .get(position).getDate());
                 HistoryFragment.transactionAdapter = new TransactionAdapter(
                         context, listTransaksi);
 
@@ -91,9 +95,9 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
                 HistoryFragment.backButton.setVisibility(View.VISIBLE);
                 HistoryFragment.adapterStatus = 2;
 
-                HistoryFragment.timeTitle.setText("Jam");
-                HistoryFragment.descriptionTitle.setText("Deskripsi");
-                HistoryFragment.billTitle.setText("Harga");
+                HistoryFragment.dateTitle.setText(R.string.time_history_row);
+                HistoryFragment.transactionTitle.setText(R.string.description_history_row);
+                HistoryFragment.totalTitle.setText(R.string.bill_history_row);
             }
         });
 
@@ -121,9 +125,9 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
                                 helper.onCreate(db);
 
                                 helper.updateBudgetByDateHistory(itemsArrayList.get(
-                                        position).getTanggal());
+                                        position).getDate());
                                 helper.deleteHistory(itemsArrayList.get(
-                                        position).getTanggal());
+                                        position).getDate());
 
 
                                 // /
@@ -186,7 +190,7 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
                 List<HistoryItem> nPlanetList = new ArrayList<HistoryItem>();
 
                 for (int i = 0; i < itemsArrayList.size(); i++) {
-                    if (itemsArrayList.get(i).getTanggal()
+                    if (itemsArrayList.get(i).getDate()
                             .toUpperCase()
                             .startsWith(constraint.toString().toUpperCase())
                             || itemsArrayList
@@ -197,7 +201,7 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
                                     constraint.toString().toUpperCase())
                             || itemsArrayList
                             .get(i)
-                            .getJumlah()
+                            .getSum()
                             .toUpperCase()
                             .startsWith(
                                     constraint.toString().toUpperCase())) {

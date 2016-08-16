@@ -7,4 +7,5 @@
     <color name="colorButtonTransactions">#f17022</color>
     <color name="colorBackButton">#f6a97a</color>
     <color name="colorItems">#fdd471</color>
+    <color name="colorItemSecond">#fee9b8</color>
 </resources>

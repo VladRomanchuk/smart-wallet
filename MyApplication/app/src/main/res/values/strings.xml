@@ -1,13 +1,26 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Smart Wallet</string>
     <string name="add_new_transaction">Add new transaction</string>
     <string name="menu_item_search">Search</string>
     <string name="menu_item_setting">Setting</string>
+
     <string name="transaction_item_text_view_price">Price</string>
     <string name="transaction_item_text_view_description">Description</string>
     <string name="transaction_item_text_vew_date">09.08.2016</string>
     <string name="transaction_item_text_view_time">10:10 a.m.</string>
+
+    <string name="transaction_item_text_view_date_text">Date:</string>
+    <string name="transaction_item_text_view_time_text">Time:</string>
+    <string name="transaction_item_text_view_description_text">Description:</string>
+
     <string name="time_history_row">Time</string>
-    <string name="description_history_row">Description</string>
+    <string name="date_history_row">Date</string>
     <string name="bill_history_row">Bill</string>
+    <string name="total_history_row">Total</string>
+    <string name="transaction_history_row">Transaction</string>
+    <string name="description_history_row">Description</string>
+
+    <string name="alert_dialog_detail_history">16.08.2016</string>
+    <string name="alert_dialog_detail_history_price">$ 116</string>
+
 </resources>

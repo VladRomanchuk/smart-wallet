@@ -20,8 +20,8 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import java.util.Calendar;
 import java.util.Date;
 
-import a8wizard.com.myapplication.R;
 import a8wizard.com.myapplication.SQLHelper;
+import a8wizard.com.myapplication.R;
 import a8wizard.com.myapplication.databinding.FragmentTransactionAddBinding;
 
 public class AddTransactionFragment extends Fragment implements View.OnClickListener,
@@ -108,7 +108,6 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
                 date.getTime()
         );
         helper.addTransaction(transactionItem);
-        Toast.makeText(getActivity(), "Transaction add", Toast.LENGTH_SHORT).show();
         helper.updateBudgetByDate(binding.transactionDatePickerTextView.getText().toString()
                         + binding.transactionTimePickerTextView.getText().toString(),
                 Double.parseDouble(binding.transactionPriceInputText.getText().toString())

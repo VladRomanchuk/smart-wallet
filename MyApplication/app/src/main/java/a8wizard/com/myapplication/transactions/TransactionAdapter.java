@@ -20,8 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import a8wizard.com.myapplication.R;
 import a8wizard.com.myapplication.SQLHelper;
+import a8wizard.com.myapplication.R;
 import a8wizard.com.myapplication.Util;
 import a8wizard.com.myapplication.history.HistoryFragment;
 
@@ -29,7 +29,6 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
         Filterable {
 
     private Context context;
-    public static String css = null;
     private ArrayList<TransactionItem> itemsArrayList;
     private ArrayList<TransactionItem> oriItemsArrayList;
 
@@ -67,47 +66,43 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
         View rowView = inflater.inflate(R.layout.rowhistory_layout, parent,
                 false);
         RelativeLayout selector = (RelativeLayout) rowView
-                .findViewById(R.id.relativeLayout1);
+                .findViewById(R.id.row_layout);
 
-        TextView jam = (TextView) rowView.findViewById(R.id.textView1);
-        TextView deskripsi = (TextView) rowView.findViewById(R.id.textView2);
-        TextView harga = (TextView) rowView.findViewById(R.id.textView3);
+        TextView time = (TextView) rowView.findViewById(R.id.textView1);
+        final TextView description = (TextView) rowView.findViewById(R.id.textView2);
+        TextView price = (TextView) rowView.findViewById(R.id.textView3);
 
         // 3. get
-        jam.setText(itemsArrayList.get(position).getJam());
-        deskripsi.setText(itemsArrayList.get(position).getDeskripsi());
-        harga.setText(Util.formatUSD(itemsArrayList.get(position).getHarga()));
+        time.setText(itemsArrayList.get(position).getTime());
+        description.setText(itemsArrayList.get(position).getDescription());
+        price.setText(Util.formatUSD(itemsArrayList.get(position).getPrice()));
 
         selector.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 LayoutInflater inflater = LayoutInflater.from(context);
-                View dialogview = inflater.inflate(
-                        R.layout.alertdialog_detailhistory, null);
+                View dialogView = inflater.inflate(R.layout.alertdialog_detailhistory, null);
                 AlertDialog.Builder alert = new AlertDialog.Builder(context);
 
-                alert.setView(dialogview);
+                alert.setView(dialogView);
 
-                TextView idTransaksi = (TextView) dialogview
-                        .findViewById(R.id.textView11);
-                TextView deskripsi = (TextView) dialogview
-                        .findViewById(R.id.textView15);
-                TextView harga = (TextView) dialogview
-                        .findViewById(R.id.textView14);
-                TextView jam = (TextView) dialogview
-                        .findViewById(R.id.textView12);
-                TextView tanggal = (TextView) dialogview
-                        .findViewById(R.id.textView13);
+                TextView dateTitle = (TextView) dialogView
+                        .findViewById(R.id.alert_dialog_detail_history_date_title_text);
+                TextView priceTitle = (TextView) dialogView
+                        .findViewById(R.id.alert_dialog_detail_history_price_text);
+                TextView dateBody = (TextView) dialogView
+                        .findViewById(R.id.alert_dialog_detail_history_date_text);
+                TextView timeBody = (TextView) dialogView
+                        .findViewById(R.id.alert_dialog_detail_history_time_text);
+                TextView descriptionBody = (TextView) dialogView
+                        .findViewById(R.id.alert_dialog_detail_history_description_text);
 
-                idTransaksi.setText(Integer.toString(itemsArrayList.get(
-                        position).getIdTransaksi()));
-                deskripsi.setText(itemsArrayList.get(position).getDeskripsi());
-                harga.setText(Util.formatUSD(itemsArrayList.get(position)
-                        .getHarga()));
-                jam.setText(itemsArrayList.get(position).getJam());
-
-                tanggal.setText(itemsArrayList.get(position).getTanggal());
+                dateTitle.setText(itemsArrayList.get(position).getDate());
+                priceTitle.setText(Util.formatUSD(itemsArrayList.get(position).getPrice()));
+                dateBody.setText(itemsArrayList.get(position).getDate());
+                timeBody.setText(itemsArrayList.get(position).getTime());
+                descriptionBody.setText(itemsArrayList.get(position).getDescription());
 
                 alert.show();
             }
@@ -163,22 +158,22 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                                 .findViewById(R.id.editText5);
 
                         eId.setText(Integer.toString(itemsArrayList.get(
-                                position).getIdTransaksi()));
+                                position).getIdTransaction()));
                         eId.setEnabled(false);
 
                         final TransactionItem transaksi = helper
                                 .getDetailTransactions(itemsArrayList
-                                        .get(position).getIdTransaksi());
+                                        .get(position).getIdTransaction());
 
-                        bTimePicker.setText(transaksi.getJam());
-                        bDatePicker.setText(transaksi.getTanggal());
-                        // eTime.setText(transaksi.getJam());
-                        // eDate.setText(transaksi.getTanggal());
-                        ePrice.setText(transaksi.getHarga());
-                        eDescription.setText(transaksi.getDeskripsi());
+                        bTimePicker.setText(transaksi.getTime());
+                        bDatePicker.setText(transaksi.getDate());
+                        // eTime.setText(transaksi.getTimeL());
+                        // eDate.setText(transaksi.getDate());
+                        ePrice.setText(transaksi.getPrice());
+                        eDescription.setText(transaksi.getDescription());
 
                         final double tempAmount = Double.parseDouble(transaksi
-                                .getHarga());
+                                .getPrice());
 
 
                         final Button bEdit = (Button) dialogview
@@ -188,8 +183,8 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                             public void onClick(View arg0) {
                                 // TODO Auto-generated method stub
                                 int idBudgetBefore = helper.getIdBudgetByDateTransaction(Util
-                                        .getTimeStamp(transaksi.getTanggal()
-                                                        + " " + transaksi.getJam(),
+                                        .getTimeStamp(transaksi.getDate()
+                                                        + " " + transaksi.getTime(),
                                                 new SimpleDateFormat(
                                                         "dd/MM/yyyy kk:mm:ss")));
                                 int idBudgetAfter = helper.getIdBudgetByDateTransaction(Util
@@ -203,7 +198,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
 
                                 if ((idBudgetBefore != idBudgetAfter)) {
                                     helper.updateBudgetSum(idBudgetBefore, Long
-                                            .parseLong(transaksi.getHarga()));
+                                            .parseLong(transaksi.getPrice()));
                                     helper.updateBudgetDifference(
                                             idBudgetAfter, Long
                                                     .parseLong(ePrice.getText()
@@ -222,7 +217,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
 
                                 TransactionItem transaksiUpdate = new TransactionItem(
                                         itemsArrayList.get(position)
-                                                .getIdTransaksi(), eDescription
+                                                .getIdTransaction(), eDescription
                                         .getText().toString(), ePrice
                                         .getText().toString(),
                                         bTimePicker.getText().toString(),
@@ -250,7 +245,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
 
                                 listTransaksi = helper
                                         .getAllTransactionByTanggal(itemsArrayList
-                                                .get(position).getTanggal());
+                                                .get(position).getDate());
                                 adapterTransaksi = new TransactionAdapter(
                                         context, listTransaksi);
 
@@ -282,16 +277,16 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                         SQLHelper helper = new SQLHelper(context);
 
                         helper.deleteTransaction(itemsArrayList.get(position)
-                                .getIdTransaksi());
+                                .getIdTransaction());
                         helper.updateBudgetByDate(
-                                itemsArrayList.get(position).getTanggal() + " "
-                                        + itemsArrayList.get(position).getJam(),
+                                itemsArrayList.get(position).getDate() + " "
+                                        + itemsArrayList.get(position).getTime(),
                                 Double.parseDouble(itemsArrayList.get(position)
-                                        .getHarga()));
+                                        .getPrice()));
 
                         listTransaksi = helper
                                 .getAllTransactionByTanggal(itemsArrayList.get(
-                                        position).getTanggal());
+                                        position).getDate());
                         adapterTransaksi = new TransactionAdapter(context,
                                 listTransaksi);
 
@@ -333,17 +328,17 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                 List<TransactionItem> nPlanetList = new ArrayList<TransactionItem>();
 
                 for (int i = 0; i < itemsArrayList.size(); i++) {
-                    if (itemsArrayList.get(i).getJam().toUpperCase()
+                    if (itemsArrayList.get(i).getTime().toUpperCase()
                             .startsWith(constraint.toString().toUpperCase())
                             || itemsArrayList
                             .get(i)
-                            .getDeskripsi()
+                            .getDescription()
                             .toUpperCase()
                             .startsWith(
                                     constraint.toString().toUpperCase())
                             || itemsArrayList
                             .get(i)
-                            .getHarga()
+                            .getPrice()
                             .toUpperCase()
                             .startsWith(
                                     constraint.toString().toUpperCase())) {
