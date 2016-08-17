@@ -27,7 +27,6 @@ import a8wizard.com.myapplication.transactions.TransactionItem;
 public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filterable {
 
     private Context context;
-    public static String css = null;
     private ArrayList<HistoryItem> itemsArrayList;
     private ArrayList<HistoryItem> oriItemsArrayList;
 
@@ -57,41 +56,33 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.rowhistory_layout, parent, false);
         RelativeLayout selector = (RelativeLayout) rowView.findViewById(R.id.row_layout);
 
-        if ((position % 2) == 0) {
-            rowView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorItems));
-        }else{
-            rowView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorItemSecond));
-        }
+        itemColorize(position, rowView);
+
         TextView tanggal = (TextView) rowView.findViewById(R.id.textView1);
         TextView total = (TextView) rowView.findViewById(R.id.textView2);
         TextView jumlah = (TextView) rowView.findViewById(R.id.textView3);
 
         tanggal.setText((itemsArrayList.get(position).getDate()));
         total.setText(itemsArrayList.get(position).getSum());
-        jumlah.setText( Util.formatUSD(itemsArrayList.get(position).getTotal()));
+        jumlah.setText(Util.formatUSD(itemsArrayList.get(position).getTotal()));
 
         selector.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
 
-                ArrayList<TransactionItem> listTransaksi = new ArrayList<TransactionItem>();
+                ArrayList<TransactionItem> listTransaction = new ArrayList<TransactionItem>();
 
                 SQLHelper helper = new SQLHelper(context);
 
-                listTransaksi = helper.getAllTransactionByTanggal(itemsArrayList
-                        .get(position).getDate());
-                HistoryFragment.transactionAdapter = new TransactionAdapter(
-                        context, listTransaksi);
+                listTransaction = helper.getAllTransactionByTanggal(itemsArrayList.get(position).getDate());
+                HistoryFragment.transactionAdapter = new TransactionAdapter(context, listTransaction);
 
-                HistoryFragment.listItem
-                        .setAdapter(HistoryFragment.transactionAdapter);
+                HistoryFragment.listItem.setAdapter(HistoryFragment.transactionAdapter);
                 HistoryFragment.backButton.setVisibility(View.VISIBLE);
                 HistoryFragment.adapterStatus = 2;
 
@@ -112,49 +103,34 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
                 builder.setIcon(android.R.drawable.ic_delete);
                 builder.setMessage("Are you sure?");
 
-                builder.setPositiveButton("YES",
-                        new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                // TODO Auto-generated method stub
+                    public void onClick(DialogInterface arg0, int arg1) {
 
-                                SQLHelper helper = new SQLHelper(
-                                        context);
-                                SQLiteDatabase db = helper
-                                        .getReadableDatabase();
-                                helper.onCreate(db);
+                        SQLHelper helper = new SQLHelper(context);
+                        SQLiteDatabase db = helper.getReadableDatabase();
 
-                                helper.updateBudgetByDateHistory(itemsArrayList.get(
-                                        position).getDate());
-                                helper.deleteHistory(itemsArrayList.get(
-                                        position).getDate());
+                        helper.onCreate(db);
+                        helper.updateBudgetByDateHistory(itemsArrayList.get(position).getDate());
+                        helper.deleteHistory(itemsArrayList.get(position).getDate());
 
+                        ArrayList<HistoryItem> listHistory = new ArrayList<HistoryItem>();
+                        HistoryAdapter adapterHistory;
 
-                                // /
-                                ArrayList<HistoryItem> listHistory = new ArrayList<HistoryItem>();
-                                HistoryAdapter adapterHistory;
+                        listHistory = helper.getAllHistory();
+                        adapterHistory = new HistoryAdapter(context, listHistory);
 
-                                listHistory = helper.getAllHistory();
-                                adapterHistory = new HistoryAdapter(context,
-                                        listHistory);
+                        HistoryFragment.listItem.setAdapter(adapterHistory);
+                        HistoryFragment.adapterStatus = 1;
 
-                                HistoryFragment.listItem.setAdapter(adapterHistory);
-                                HistoryFragment.adapterStatus = 1;
+                    }
+                });
 
-                            }
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
-                        });
-
-                builder.setNegativeButton("NO",
-                        new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog,
-                                                int which) {
-                                // TODO Auto-generated method stub
-
-                            }
-
-                        });
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
 
                 AlertDialog alert = builder.create();
                 alert.show();
@@ -166,70 +142,57 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
         return rowView;
     }
 
-
-    @Override
-    public Filter getFilter() {
-        if (planetFilter == null)
-            planetFilter = new PlanetFilter();
-
-        return planetFilter;
+    private void itemColorize(int position, View view) {
+        if ((position % 2) == 0) {
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorItems));
+        } else {
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorItemSecond));
+        }
     }
 
     private class PlanetFilter extends Filter {
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
+
             FilterResults results = new FilterResults();
-            // We implement here the filter logic
+
             if (constraint == null || constraint.length() == 0) {
-                // No filter implemented we return all the list
                 results.values = oriItemsArrayList;
                 results.count = oriItemsArrayList.size();
             } else {
-                // We perform filtering operation
                 List<HistoryItem> nPlanetList = new ArrayList<HistoryItem>();
-
                 for (int i = 0; i < itemsArrayList.size(); i++) {
                     if (itemsArrayList.get(i).getDate()
                             .toUpperCase()
-                            .startsWith(constraint.toString().toUpperCase())
-                            || itemsArrayList
+                            .startsWith(constraint.toString().toUpperCase()) || itemsArrayList
                             .get(i)
                             .getTotal()
                             .toUpperCase()
-                            .startsWith(
-                                    constraint.toString().toUpperCase())
-                            || itemsArrayList
+                            .startsWith(constraint.toString().toUpperCase()) || itemsArrayList
                             .get(i)
                             .getSum()
                             .toUpperCase()
-                            .startsWith(
-                                    constraint.toString().toUpperCase())) {
+                            .startsWith(constraint.toString().toUpperCase())) {
                         nPlanetList.add(itemsArrayList.get(i));
-
                     }
                 }
 
                 results.values = nPlanetList;
                 results.count = nPlanetList.size();
-
             }
             return results;
         }
 
         @SuppressWarnings("unchecked")
         @Override
-        protected void publishResults(CharSequence constraint,
-                                      FilterResults results) {
+        protected void publishResults(CharSequence constraint, FilterResults results) {
 
-            // Now we have to inform the historyAdapter about the new list filtered
             if (results.count == 0)
                 notifyDataSetInvalidated();
-            else {
-
+            else
                 itemsArrayList = (ArrayList<HistoryItem>) results.values;
-                notifyDataSetChanged();
-            }
+            notifyDataSetChanged();
 
         }
 

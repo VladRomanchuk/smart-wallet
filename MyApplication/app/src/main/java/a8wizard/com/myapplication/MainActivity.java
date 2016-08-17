@@ -81,14 +81,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.transaction_tab_layout:
-                    showTransactionScreen();
+                showTransactionScreen();
                 break;
             case R.id.history_tab_layout:
                 showHistoryScreen();
                 break;
             case R.id.statistic_tab_layout:
-                showStatisticScreen();
-                break;
+                showStatisticScreen();break;
         }
     }
 
@@ -105,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fm.executePendingTransactions();
     }
 
-    public  void showTransactionScreen() {
+    public void showTransactionScreen() {
         showScreen(new AddTransactionFragment(), AddTransactionFragment.TAG, false);
         findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorItems));
     }

@@ -15,25 +15,15 @@ public class TransactionItem {
 
 	private String time;
 	private String date;
-	private long timeL;
 
 	public TransactionItem(int idTransaction, String description, String price,
-					 String time, String date, long timeL) {
+					 String time, String date) {
 		super();
 		this.idTransaction = idTransaction;
 		this.description = description;
 		this.price = price;
 		this.time = time;
 		this.date = date;
-		this.timeL = timeL;
-	}
-
-	public long getTimeL() {
-		return timeL;
-	}
-
-	public void setTimeL(long timeL) {
-		this.timeL = timeL;
 	}
 
 	public int getIdTransaction() {

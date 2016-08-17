@@ -101,7 +101,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                 dateTitle.setText(itemsArrayList.get(position).getDate());
                 priceTitle.setText(Util.formatUSD(itemsArrayList.get(position).getPrice()));
                 dateBody.setText(itemsArrayList.get(position).getDate());
-                timeBody.setText(itemsArrayList.get(position).getTime());
+//                timeBody.setText(itemsArrayList.get(position).getTime());
                 descriptionBody.setText(itemsArrayList.get(position).getDescription());
 
                 alert.show();
@@ -186,7 +186,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                                         .getTimeStamp(transaksi.getDate()
                                                         + " " + transaksi.getTime(),
                                                 new SimpleDateFormat(
-                                                        "dd/MM/yyyy kk:mm:ss")));
+                                                        "dd/MM/yyyy HH:mm:ss")));
                                 int idBudgetAfter = helper.getIdBudgetByDateTransaction(Util
                                         .getTimeStamp(bDatePicker.getText()
                                                         .toString()
@@ -194,7 +194,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                                                         + bTimePicker.getText()
                                                         .toString(),
                                                 new SimpleDateFormat(
-                                                        "dd/MM/yyyy kk:mm:ss")));
+                                                        "dd/MM/yyyy HH:mm:ss")));
 
                                 if ((idBudgetBefore != idBudgetAfter)) {
                                     helper.updateBudgetSum(idBudgetBefore, Long
@@ -221,14 +221,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                                         .getText().toString(), ePrice
                                         .getText().toString(),
                                         bTimePicker.getText().toString(),
-                                        bDatePicker.getText().toString(),
-                                        Util.getTimeStamp(bDatePicker.getText()
-                                                        .toString()
-                                                        + " "
-                                                        + bTimePicker.getText()
-                                                        .toString(),
-                                                new SimpleDateFormat(
-                                                        "dd/MM/yyyy kk:mm:ss")));
+                                        bDatePicker.getText().toString());
                                 helper.updateTransaction(transaksiUpdate);
 
                                 // update amount budget yang transaksinya masih

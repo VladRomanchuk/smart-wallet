@@ -89,6 +89,9 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
                     Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.price_layout:
+
+                break;
             case R.id.date_picker_layout:
                 showDatePicker();
                 break;
@@ -104,9 +107,7 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
                 binding.transactionDescriptionInputText.getText().toString(),
                 binding.transactionPriceInputText.getText().toString(),
                 binding.transactionTimePickerTextView.getText().toString(),
-                binding.transactionDatePickerTextView.getText().toString(),
-                date.getTime()
-        );
+                binding.transactionDatePickerTextView.getText().toString());
         helper.addTransaction(transactionItem);
         helper.updateBudgetByDate(binding.transactionDatePickerTextView.getText().toString()
                         + binding.transactionTimePickerTextView.getText().toString(),

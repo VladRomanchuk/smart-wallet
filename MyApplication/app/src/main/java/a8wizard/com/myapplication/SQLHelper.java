@@ -120,10 +120,7 @@ public class SQLHelper extends SQLiteOpenHelper {
     public void updateBudgetByDateHistory(String tgl) {
 
         ArrayList<TransactionItem> trans = getAllTransactionByTanggal(tgl);
-		/*
-		 * Toast.makeText(context, tgl + Integer.toString(trans.size()),
-		 * Toast.LENGTH_SHORT) .show();
-		 */
+
         for (int i = 0; i < trans.size(); i++) {
             updateBudgetByDate(trans.get(i).getDate() + " "
                             + trans.get(i).getTime(),
@@ -213,8 +210,6 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     public ArrayList<BudgetItem> getAllWeeklyBudget() {
         ArrayList<BudgetItem> budgets = new ArrayList<BudgetItem>();
-        // 1. build the query
-        // String query = "select * from tbl_friendlist";
 
         String query = "select * from tbl_budget where category='Weekly' order by idBudget asc";
 
@@ -316,8 +311,7 @@ public class SQLHelper extends SQLiteOpenHelper {
             do {
                 trans = new TransactionItem(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), cursor.getString(2),
-                        cursor.getString(3), cursor.getString(4),
-                        Long.parseLong(cursor.getString(5)));
+                        cursor.getString(3), cursor.getString(4));
 
             } while (cursor.moveToNext());
         }
@@ -433,8 +427,7 @@ public class SQLHelper extends SQLiteOpenHelper {
             do {
                 trans = new TransactionItem(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), cursor.getString(2),
-                        cursor.getString(3), cursor.getString(4),
-                        Long.parseLong(cursor.getString(5)));
+                        cursor.getString(3), cursor.getString(4));
 
                 transaction.add(trans);
             } while (cursor.moveToNext());

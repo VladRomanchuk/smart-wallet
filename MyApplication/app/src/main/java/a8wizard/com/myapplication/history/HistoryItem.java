@@ -5,11 +5,11 @@ public class HistoryItem {
 	private String total;
 	private String sum;
 
-	public HistoryItem(String date, String total, String jumlah) {
+	public HistoryItem(String date, String total, String sum) {
 		super();
 		this.date = date;
 		this.total = total;
-		this.sum = jumlah;
+		this.sum = sum;
 	}
 
 	public String getDate() {
