@@ -54,11 +54,11 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.rowhistory_layout, parent, false);
-        RelativeLayout selector = (RelativeLayout) rowView.findViewById(R.id.row_layout);
+        final View rowView = inflater.inflate(R.layout.rowhistory_layout, parent, false);
+        final RelativeLayout selector = (RelativeLayout) rowView.findViewById(R.id.row_layout);
 
         itemColorize(position, rowView);
 
@@ -73,10 +73,8 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
         selector.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                // TODO Auto-generated method stub
 
                 ArrayList<TransactionItem> listTransaction = new ArrayList<TransactionItem>();
-
                 SQLHelper helper = new SQLHelper(context);
 
                 listTransaction = helper.getAllTransactionByTanggal(itemsArrayList.get(position).getDate());
@@ -95,7 +93,6 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
         selector.setOnLongClickListener(new OnLongClickListener() {
 
             public boolean onLongClick(View arg0) {
-                // TODO Auto-generated method stub
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
                 builder.setTitle("Deletion");

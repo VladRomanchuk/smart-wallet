@@ -78,16 +78,19 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+        boolean isColorChanges = false;
+
         switch (view.getId()) {
             case R.id.add_new_transaction:
+                isColorChanges = true;
+                
                 if (!isEditTextEmpty(binding.transactionPriceInputText, binding.transactionDescriptionInputText)) {
                     addTransaction();
                     binding.transactionPriceInputText.setText("");
                     binding.transactionDescriptionInputText.setText("");
                     binding.transactionPriceInputText.requestFocus();
-                }else {
-                    Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                 }
+
                 break;
             case R.id.price_layout:
 
@@ -131,7 +134,7 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
         if ((sField.getText().length() == 0)) {
             sField.setError("Must be fill.");
             isEditTextEmpty = true;
-        }else{
+        } else {
             isEditTextEmpty = false;
         }
         return isEditTextEmpty;

@@ -2,6 +2,7 @@ package a8wizard.com.myapplication.transactions;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,10 +64,10 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // 2. Get rowView from inflater
-        View rowView = inflater.inflate(R.layout.rowhistory_layout, parent,
-                false);
-        RelativeLayout selector = (RelativeLayout) rowView
-                .findViewById(R.id.row_layout);
+        View rowView = inflater.inflate(R.layout.rowhistory_layout, parent, false);
+        RelativeLayout selector = (RelativeLayout) rowView.findViewById(R.id.row_layout);
+
+        itemColorize(position, rowView);
 
         TextView time = (TextView) rowView.findViewById(R.id.textView1);
         final TextView description = (TextView) rowView.findViewById(R.id.textView2);
@@ -285,17 +286,23 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
 
                         HistoryFragment.listItem.setAdapter(adapterTransaksi);
                         HistoryFragment.adapterStatus = 2;
-
                     }
                 });
 
                 alert.show();
                 return false;
-
             }
         });
 
         return rowView;
+    }
+
+    private void itemColorize(int position, View view) {
+        if ((position % 2) == 0) {
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorItems));
+        } else {
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorItemSecond));
+        }
     }
 
     @Override
