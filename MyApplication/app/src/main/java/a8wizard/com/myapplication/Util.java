@@ -13,9 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-import a8wizard.com.myapplication.statistic.BudgetItem;
-
-
 public class Util {
 
     private static Context context;
@@ -66,7 +63,6 @@ public class Util {
         try {
             return sdf.parse(dateStr).getTime();
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             return 0;
         }
 

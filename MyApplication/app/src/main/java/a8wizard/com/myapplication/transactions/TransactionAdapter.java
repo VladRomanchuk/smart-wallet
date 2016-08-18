@@ -2,6 +2,8 @@ package a8wizard.com.myapplication.transactions;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,21 +19,35 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import a8wizard.com.myapplication.MainActivity;
 import a8wizard.com.myapplication.SQLHelper;
 import a8wizard.com.myapplication.R;
 import a8wizard.com.myapplication.Util;
 import a8wizard.com.myapplication.history.HistoryFragment;
 
 public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
-        Filterable {
+        Filterable, TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
     private Context context;
+    private Calendar now;
+
     private ArrayList<TransactionItem> itemsArrayList;
     private ArrayList<TransactionItem> oriItemsArrayList;
+
+    public Button bTimePicker;
+    public Button bDatePicker;
+
+    public long g;
 
     private Filter planetFilter;
 
@@ -67,6 +83,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
         View rowView = inflater.inflate(R.layout.rowhistory_layout, parent, false);
         RelativeLayout selector = (RelativeLayout) rowView.findViewById(R.id.row_layout);
 
+        now = Calendar.getInstance();
         itemColorize(position, rowView);
 
         TextView time = (TextView) rowView.findViewById(R.id.textView1);
@@ -74,7 +91,9 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
         TextView price = (TextView) rowView.findViewById(R.id.textView3);
 
         // 3. get
-        time.setText(itemsArrayList.get(position).getTime());
+//        g = Util.getTimeStamp(,new SimpleDateFormat("hh:mm" ));
+        String s = new SimpleDateFormat("hh:mm").format(new Date(Long.parseLong(itemsArrayList.get(position).getTime())));
+        time.setText(""+s);
         description.setText(itemsArrayList.get(position).getDescription());
         price.setText(Util.formatUSD(itemsArrayList.get(position).getPrice()));
 
@@ -99,13 +118,14 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                         .findViewById(R.id.alert_dialog_detail_history_time_text);
                 TextView descriptionBody = (TextView) dialogView
                         .findViewById(R.id.alert_dialog_detail_history_description_text);
+
                 Button buttonCancel = (Button) dialogView.findViewById(R.id.alert_dialog_history_detail_cancel_button);
                 Button buttonOk = (Button) dialogView.findViewById(R.id.alert_dialog_history_detail_ok_button);
 
                 dateTitle.setText(itemsArrayList.get(position).getDate());
                 priceTitle.setText(Util.formatUSD(itemsArrayList.get(position).getPrice()));
                 dateBody.setText(itemsArrayList.get(position).getDate());
-                timeBody.setText(itemsArrayList.get(position).getTime());
+                timeBody.setText(new SimpleDateFormat("hh:mm").format(Long.parseLong(itemsArrayList.get(position).getTime())));
                 descriptionBody.setText(itemsArrayList.get(position).getDescription());
 
                 final AlertDialog show = alert.show();
@@ -133,61 +153,61 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                 // TODO Auto-generated method stub
                 LayoutInflater inflater = LayoutInflater.from(context);
                 View dialogview = inflater.inflate(
-                        R.layout.alertdialog_deleteedit, null);
+                        R.layout.alertdialog_delete_edit, null);
                 final AlertDialog alert = new AlertDialog.Builder(context)
                         .create();
 
-                alert.setMessage("Ubah atau hapus transaksi?");
+//                alert.setMessage("Ubah atau hapus transaksi?");
                 alert.setView(dialogview);
 
                 final Button bEdit = (Button) dialogview
-                        .findViewById(R.id.button1);
+                        .findViewById(R.id.edit_button);
                 final Button bDelete = (Button) dialogview
-                        .findViewById(R.id.button2);
+                        .findViewById(R.id.delete_button);
 
                 bEdit.setOnClickListener(new OnClickListener() {
 
                     public void onClick(View arg0) {
-                        // TODO Auto-generated method stub
                         alert.dismiss();
 
                         final SQLHelper helper = new SQLHelper(
                                 context);
 
                         LayoutInflater inflater = LayoutInflater.from(context);
-                        View dialogview = inflater.inflate(
-                                R.layout.alertdialog_edit, null);
-                        final AlertDialog alert = new AlertDialog.Builder(
-                                context).create();
+                        View dialogview = inflater.inflate(R.layout.alertdialog_edit, null);
+                        final AlertDialog alert = new AlertDialog.Builder(context).create();
 
-                        final EditText eId = (EditText) dialogview
-                                .findViewById(R.id.search_edit_text);
-                        // final EditText eTime = (EditText) dialogview
-                        // .findViewById(R.id.editText2);
-                        // final EditText eDate = (EditText) dialogview
-                        // .findViewById(R.id.editText3);
-                        final Button bTimePicker = (Button) dialogview
+                        bTimePicker = (Button) dialogview
                                 .findViewById(R.id.button3);
-                        final Button bDatePicker = (Button) dialogview
-                                .findViewById(R.id.button2);
+                        bDatePicker = (Button) dialogview
+                                .findViewById(R.id.delete_button);
+
 
                         final EditText ePrice = (EditText) dialogview
                                 .findViewById(R.id.editText4);
                         final EditText eDescription = (EditText) dialogview
                                 .findViewById(R.id.editText5);
 
-                        eId.setText(Integer.toString(itemsArrayList.get(
-                                position).getIdTransaction()));
-                        eId.setEnabled(false);
+                        bTimePicker.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                showTimePicker();
+                            }
+                        });
+
+                        bDatePicker.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                showDatePicker();
+                            }
+                        });
 
                         final TransactionItem transaksi = helper
                                 .getDetailTransactions(itemsArrayList
                                         .get(position).getIdTransaction());
 
-                        bTimePicker.setText(transaksi.getTime());
+                        bTimePicker.setText(new SimpleDateFormat("hh:mm").format(Long.parseLong(itemsArrayList.get(position).getTime())));
                         bDatePicker.setText(transaksi.getDate());
-                        // eTime.setText(transaksi.getTimeL());
-                        // eDate.setText(transaksi.getDate());
                         ePrice.setText(transaksi.getPrice());
                         eDescription.setText(transaksi.getDescription());
 
@@ -196,7 +216,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
 
 
                         final Button bEdit = (Button) dialogview
-                                .findViewById(R.id.button1);
+                                .findViewById(R.id.edit_button);
                         bEdit.setOnClickListener(new OnClickListener() {
 
                             public void onClick(View arg0) {
@@ -204,16 +224,13 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                                 int idBudgetBefore = helper.getIdBudgetByDateTransaction(Util
                                         .getTimeStamp(transaksi.getDate()
                                                         + " " + transaksi.getTime(),
-                                                new SimpleDateFormat(
-                                                        "dd/MM/yyyy HH:mm:ss")));
+                                                new SimpleDateFormat("dd/MM/yyyy kk:mm:ss")));
                                 int idBudgetAfter = helper.getIdBudgetByDateTransaction(Util
                                         .getTimeStamp(bDatePicker.getText()
-                                                        .toString()
-                                                        + " "
-                                                        + bTimePicker.getText()
-                                                        .toString(),
-                                                new SimpleDateFormat(
-                                                        "dd/MM/yyyy HH:mm:ss")));
+                                                .toString()
+                                                + " "
+                                                + bTimePicker.getText()
+                                                .toString(), new SimpleDateFormat("dd/MM/yyyy kk:mm:ss")));
 
                                 if ((idBudgetBefore != idBudgetAfter)) {
                                     helper.updateBudgetSum(idBudgetBefore, Long
@@ -235,12 +252,13 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                                 TransactionAdapter adapterTransaksi;
 
                                 TransactionItem transaksiUpdate = new TransactionItem(
-                                        itemsArrayList.get(position)
-                                                .getIdTransaction(), eDescription
-                                        .getText().toString(), ePrice
-                                        .getText().toString(),
-                                        bTimePicker.getText().toString(),
-                                        bDatePicker.getText().toString());
+                                        itemsArrayList.get(position).getIdTransaction(),
+                                        eDescription.getText().toString(),
+                                        ePrice.getText().toString(),
+                                        Long.toString(g),
+                                        bDatePicker.getText().toString(),
+                                        Util.getTimeStamp(bTimePicker.getText()
+                                                .toString(), new SimpleDateFormat("HH:mm")));
                                 helper.updateTransaction(transaksiUpdate);
 
                                 // update amount budget yang transaksinya masih
@@ -270,7 +288,6 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                             }
                         });
 
-                        alert.setTitle("Edit Transaction");
                         alert.setView(dialogview);
 
                         alert.show();
@@ -315,6 +332,32 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
         return rowView;
     }
 
+    public void showTimePicker() {
+        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(this,
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                false
+        );
+
+        timePickerDialog.dismissOnPause(true);
+        timePickerDialog.setAccentColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        timePickerDialog.show(((MainActivity) context).getFragmentManager(), "TimePicker Dialog");
+
+    }
+
+    public void showDatePicker() {
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+
+        datePickerDialog.setAccentColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        datePickerDialog.dismissOnPause(true);
+        datePickerDialog.show(((MainActivity) context).getFragmentManager(), "DatePicker Dialog");
+
+    }
+
     private void itemColorize(int position, View view) {
         if ((position % 2) == 0) {
             view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorItems));
@@ -329,6 +372,24 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
             planetFilter = new PlanetFilter();
 
         return planetFilter;
+    }
+
+    @Override
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+        String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
+        String minuteString = minute < 10 ? "0" + minute : "" + minute;
+
+        g = Util.getTimeStamp(hourString + ":" + minuteString, new SimpleDateFormat("HH:mm"));
+        String s = new SimpleDateFormat("hh:mm").format(new Date(g));
+
+
+        bTimePicker.setText(s);
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = dayOfMonth + "." + (++monthOfYear) + "." + year;
+        bDatePicker.setText(date);
     }
 
     private class PlanetFilter extends Filter {
@@ -389,5 +450,6 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
         }
 
     }
+
 
 }

@@ -21,16 +21,18 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import a8wizard.com.myapplication.SQLHelper;
 import a8wizard.com.myapplication.R;
+import a8wizard.com.myapplication.Util;
 import a8wizard.com.myapplication.databinding.FragmentTransactionAddBinding;
 
 public class AddTransactionFragment extends Fragment implements View.OnClickListener,
         TimePickerDialog.OnTimeSetListener,
-        DatePickerDialog.OnDateSetListener, View.OnFocusChangeListener{
+        DatePickerDialog.OnDateSetListener, View.OnFocusChangeListener {
 
     FragmentTransactionAddBinding binding;
 
@@ -39,7 +41,6 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
     private Calendar now;
     private SQLHelper helper;
     private TimePickerDialog timePickerDialog;
-    private boolean isColorChanges = false;
 
     public static TextView transactionDatePickerTextView;
     public static TextView transactionTimePickerTextView;
@@ -50,7 +51,6 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_transaction_add, container, false);
 
-        setupButton();
         setupLayouts();
         initTextView();
         helper = new SQLHelper(getActivity());
@@ -79,11 +79,9 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
         transactionTimePickerTextView = binding.transactionTimePickerTextView;
     }
 
-    private void setupButton() {
-        binding.addNewTransaction.setOnClickListener(this);
-    }
 
     private void setupLayouts() {
+        binding.addNewTransaction.setOnClickListener(this);
         binding.datePickerLayout.setOnClickListener(this);
         binding.timePickerLayout.setOnClickListener(this);
         binding.transactionPriceInputText.setOnClickListener(this);
@@ -114,7 +112,7 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
                 showDatePicker();
                 break;
             case R.id.time_picker_layout:
-                showTimePicker();
+                showTimePicker(now);
                 break;
         }
         defocusingEditText();
@@ -131,12 +129,12 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
                 binding.transactionDescriptionInputText.getText().toString(),
                 binding.transactionPriceInputText.getText().toString(),
                 binding.transactionTimePickerTextView.getText().toString(),
-                binding.transactionDatePickerTextView.getText().toString());
+                binding.transactionDatePickerTextView.getText().toString(),
+                Util.getTimeStamp(binding.transactionTimePickerTextView.getText().toString(), new SimpleDateFormat("HH:mm")));
         helper.addTransaction(transactionItem);
-        helper.updateBudgetByDate(binding.transactionDatePickerTextView.getText().toString()
-                        + binding.transactionTimePickerTextView.getText().toString(),
-                Double.parseDouble(binding.transactionPriceInputText.getText().toString())
-                        * (-1));
+        helper.updateBudgetByDate(binding.transactionDatePickerTextView.getText().toString() +
+                binding.transactionTimePickerTextView.getText().toString(),
+                Double.parseDouble(binding.transactionPriceInputText.getText().toString()) * (-1));
 
     }
 
@@ -176,10 +174,10 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
 
     }
 
-    public void showTimePicker() {
+    public void showTimePicker(Calendar calendar) {
         timePickerDialog = TimePickerDialog.newInstance(this,
-                now.get(Calendar.HOUR_OF_DAY),
-                now.get(Calendar.MINUTE),
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
                 false
         );
 
@@ -191,7 +189,7 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onFocusChange(View view, boolean b) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.transaction_price_input_text:
                 colorizeFocusItem(b, binding.priceLayout);
                 break;

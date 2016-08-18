@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.RelativeLayout;
@@ -93,17 +94,17 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
         selector.setOnLongClickListener(new OnLongClickListener() {
 
             public boolean onLongClick(View arg0) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                LayoutInflater inflater = LayoutInflater.from(context);
+                View dialogview = inflater.inflate(R.layout.alert_delete, null);
+                final AlertDialog alert = new AlertDialog.Builder(context).create();
+                final Button bCancel = (Button) dialogview
+                        .findViewById(R.id.cancel_button);
+                final Button bOk = (Button) dialogview
+                        .findViewById(R.id.ok_button);
 
-                builder.setTitle("Deletion");
-
-                builder.setIcon(android.R.drawable.ic_delete);
-                builder.setMessage("Are you sure?");
-
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface arg0, int arg1) {
-
+                bOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
                         SQLHelper helper = new SQLHelper(context);
                         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -119,17 +120,18 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
 
                         HistoryFragment.listItem.setAdapter(adapterHistory);
                         HistoryFragment.adapterStatus = 1;
+                        alert.dismiss();
 
                     }
                 });
 
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
+                bCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
                     }
                 });
-
-                AlertDialog alert = builder.create();
+                alert.setView(dialogview);
                 alert.show();
 
                 return true;

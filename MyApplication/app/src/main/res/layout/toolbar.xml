@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Add Transaction"
+        android:id="@+id/toolbar_text"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 </android.support.v7.widget.Toolbar>

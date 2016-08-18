@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-import a8wizard.com.myapplication.statistic.BudgetItem;
 import a8wizard.com.myapplication.history.HistoryItem;
 import a8wizard.com.myapplication.transactions.TransactionItem;
 
@@ -18,9 +18,9 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_NAME    = "smartWallet";
-    public  static final String TBL_TRANSACTIONS = "tbl_transactions";
-    public  static final String TBL_BUDGET       = "tbl_budget";
+    private static final String DATABASE_NAME = "smartWallet";
+    public static final String TBL_TRANSACTIONS = "tbl_transactions";
+    public static final String TBL_BUDGET = "tbl_budget";
 
     private Context context;
 
@@ -173,7 +173,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         db.insert(TBL_BUDGET, null, values);
         Toast.makeText(context, "BudgetItem has been set", Toast.LENGTH_SHORT)
                 .show();
-        if(Util.checkBudget(context))
+        if (Util.checkBudget(context))
             Util.updateWidget(context);
 
         db.close();
@@ -267,7 +267,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         Toast.makeText(context, "Last budget has been deleted", Toast.LENGTH_SHORT)
                 .show();
         db.execSQL("delete from tbl_budget where idBudget='" + idBudget + "'");
-        if(Util.checkBudget(context))
+        if (Util.checkBudget(context))
             Util.updateWidget(context);
 
     }
@@ -276,20 +276,18 @@ public class SQLHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
 
-
         db.execSQL("update tbl_budget set left=left-" + amount
                 + " where idBudget=" + idBudget + "");
-        if(Util.checkBudget(context))
+        if (Util.checkBudget(context))
             Util.updateWidget(context);
     }
-
 
 
     public void updateBudgetSum(int idBudget, double amount) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("update tbl_budget set left=left+" + amount
                 + " where idBudget=" + idBudget + "");
-        if(Util.checkBudget(context))
+        if (Util.checkBudget(context))
             Util.updateWidget(context);
     }
 
@@ -311,7 +309,8 @@ public class SQLHelper extends SQLiteOpenHelper {
             do {
                 trans = new TransactionItem(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), cursor.getString(2),
-                        cursor.getString(3), cursor.getString(4));
+                        cursor.getString(3), cursor.getString(4),
+                        new Date().getTime());
 
             } while (cursor.moveToNext());
         }
@@ -395,7 +394,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        // values.put("idTransaksi", "");
+//         values.put("idTransaksi", "");
         values.put("description", transactionItem.getDescription());
         values.put("price", transactionItem.getPrice());
         values.put("clock", transactionItem.getTime());
@@ -425,9 +424,11 @@ public class SQLHelper extends SQLiteOpenHelper {
         TransactionItem trans = null;
         if (cursor.moveToFirst()) {
             do {
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
                 trans = new TransactionItem(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), cursor.getString(2),
-                        cursor.getString(3), cursor.getString(4));
+                        cursor.getString(3), cursor.getString(4),
+                        new Date().getTime());
 
                 transaction.add(trans);
             } while (cursor.moveToNext());

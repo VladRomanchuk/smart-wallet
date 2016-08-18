@@ -12,6 +12,7 @@
     <string name="transaction_item_text_view_date_text">Date:</string>
     <string name="transaction_item_text_view_time_text">Time:</string>
     <string name="transaction_item_text_view_description_text">Description:</string>
+    <string name="transaction_item_text_view_price_text">Price:</string>
 
     <string name="time_history_row">Time</string>
     <string name="date_history_row">Date</string>
@@ -22,5 +23,25 @@
 
     <string name="alert_dialog_detail_history">16.08.2016</string>
     <string name="alert_dialog_detail_history_price">$ 116</string>
+
+
+    <string-array name="category_array">
+        <item>Choose your category:</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </string-array>
+    <string-array name="statistic_array">
+        <item>Choose your filter:</item>
+        <item>Daily</item>
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
+    <string-array name="budget_array">
+        <item>Choose your filter:</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Both</item>
+    </string-array>
+
 
 </resources>

@@ -2,42 +2,140 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp" >
-
-    <EditText
-        android:id="@+id/search_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:hint="ID" />
+    android:background="@android:color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical" >
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:text="Actions Transaction"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.2"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:background="@color/colorItems"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layout_weight="0.19"
+            android:gravity="center_vertical"
+            android:text="@string/transaction_item_text_view_price_text"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+
+        <EditText
+            android:id="@+id/editText4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:hint="@string/transaction_item_text_view_price"
+            android:textSize="18sp"
+            android:inputType="text"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/black" />
+    </LinearLayout>
+
+    <include layout="@layout/divider_item" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.2"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:background="@color/colorItems"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layout_weight="0.25"
+            android:gravity="center_vertical"
+            android:text="@string/transaction_item_text_view_description_text"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/editText5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:background="@color/colorItems"
+            android:gravity="bottom"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:hint="Description"
+            android:inputType="number"
+            android:textColorHint="@android:color/black" />
+    </LinearLayout>
+
+    <include layout="@layout/divider_item" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:layout_weight="2.2"
+        android:background="@color/colorItems"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp">
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/clock" />
+            android:src="@drawable/calendar" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/delete_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="32dp"
             android:layout_weight="1"
-            android:background="@color/colorBackground"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="10dp"
-            android:text="Date" />
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:text="Date"
+            android:textColor="@android:color/black" />
     </LinearLayout>
+
+    <include layout="@layout/divider_item" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical" >
+        android:layout_height="0dp"
+        android:layout_weight="2.2"
+        android:background="@color/colorItems"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp">
 
         <ImageView
             android:id="@+id/imageView2"
@@ -47,36 +145,22 @@
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="10dp"
-            android:text="Clock" />
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:layout_marginLeft="16dp"
+            android:text="Clock"
+            android:textColor="@android:color/black" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:inputType="number"
-        android:hint="Price" />
-
-    <EditText
-        android:id="@+id/editText5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorBackground"
-        android:inputType="text"
-        android:hint="Description" />
-
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/edit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBackground"
+        android:background="@color/colorButtonTransactions"
         android:text="Edit"
         android:textColor="@android:color/white" />
 
