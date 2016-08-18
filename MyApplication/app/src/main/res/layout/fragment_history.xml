@@ -93,26 +93,26 @@
 
             <Button
                 android:id="@+id/history_back_button"
-                android:layout_width="match_parent"
-                android:layout_height="50sp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorBackButton"
                 android:drawableLeft="@drawable/ic_back"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
                 android:text="Back"
                 android:textColor="@android:color/white"
                 android:textSize="14sp" />
 
             <Button
                 android:id="@+id/search_back_button"
-                android:layout_width="match_parent"
-                android:layout_height="50sp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorButtonTransactions"
                 android:drawableLeft="@drawable/ic_search"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
                 android:text="@string/menu_item_search"
                 android:textColor="@android:color/white"
                 android:textSize="14sp" />

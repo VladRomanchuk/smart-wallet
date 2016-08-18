@@ -18,6 +18,7 @@ import a8wizard.com.myapplication.statistic.BudgetItem;
 
 public class Util {
 
+    private static Context context;
 
     public static String getDateString(long timeStamp, SimpleDateFormat sdf) {
 
@@ -81,6 +82,14 @@ public class Util {
         }
 
         return false;
+    }
+
+    public static void colorizeFocusItem(boolean focus, View view) {
+        if (focus) {
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+        } else {
+            view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        }
     }
 
     public static boolean checkBudget(Context context) {

@@ -6,9 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +30,7 @@ import a8wizard.com.myapplication.databinding.FragmentTransactionAddBinding;
 
 public class AddTransactionFragment extends Fragment implements View.OnClickListener,
         TimePickerDialog.OnTimeSetListener,
-        DatePickerDialog.OnDateSetListener {
+        DatePickerDialog.OnDateSetListener, View.OnFocusChangeListener{
 
     FragmentTransactionAddBinding binding;
 
@@ -35,6 +39,7 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
     private Calendar now;
     private SQLHelper helper;
     private TimePickerDialog timePickerDialog;
+    private boolean isColorChanges = false;
 
     public static TextView transactionDatePickerTextView;
     public static TextView transactionTimePickerTextView;
@@ -50,8 +55,23 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
         initTextView();
         helper = new SQLHelper(getActivity());
         now = Calendar.getInstance();
+        editTextFocusListenerSetup();
 
         return binding.getRoot();
+    }
+
+    private void editTextFocusListenerSetup() {
+        binding.transactionPriceInputText.setOnFocusChangeListener(this);
+        binding.transactionDescriptionInputText.setOnFocusChangeListener(this);
+
+    }
+
+    private void colorizeFocusItem(boolean focus, View view) {
+        if (focus) {
+            view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+        } else {
+            view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorItems));
+        }
     }
 
     private void initTextView() {
@@ -66,6 +86,8 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
     private void setupLayouts() {
         binding.datePickerLayout.setOnClickListener(this);
         binding.timePickerLayout.setOnClickListener(this);
+        binding.transactionPriceInputText.setOnClickListener(this);
+        binding.transactionDescriptionInputText.setOnClickListener(this);
     }
 
     @Override
@@ -78,22 +100,15 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        boolean isColorChanges = false;
 
         switch (view.getId()) {
             case R.id.add_new_transaction:
-                isColorChanges = true;
-                
                 if (!isEditTextEmpty(binding.transactionPriceInputText, binding.transactionDescriptionInputText)) {
                     addTransaction();
                     binding.transactionPriceInputText.setText("");
                     binding.transactionDescriptionInputText.setText("");
                     binding.transactionPriceInputText.requestFocus();
                 }
-
-                break;
-            case R.id.price_layout:
-
                 break;
             case R.id.date_picker_layout:
                 showDatePicker();
@@ -102,10 +117,16 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
                 showTimePicker();
                 break;
         }
+        defocusingEditText();
+
+    }
+
+    private void defocusingEditText() {
+        binding.priceLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorItems));
+        binding.descriptionLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorItems));
     }
 
     private void addTransaction() {
-        Date date = new Date();
         TransactionItem transactionItem = new TransactionItem(0,
                 binding.transactionDescriptionInputText.getText().toString(),
                 binding.transactionPriceInputText.getText().toString(),
@@ -166,5 +187,17 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
         timePickerDialog.setAccentColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
         timePickerDialog.show(getActivity().getFragmentManager(), "TimePicker Dialog");
 
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        switch (view.getId()){
+            case R.id.transaction_price_input_text:
+                colorizeFocusItem(b, binding.priceLayout);
+                break;
+            case R.id.transaction_description_input_text:
+                colorizeFocusItem(b, binding.descriptionLayout);
+                break;
+        }
     }
 }

@@ -10,9 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import a8wizard.com.myapplication.history.HistoryFragment;
 import a8wizard.com.myapplication.statistic.StatisticFragment;
@@ -71,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.search:
+            case R.id.budget:
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -87,7 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showHistoryScreen();
                 break;
             case R.id.statistic_tab_layout:
-                showStatisticScreen();break;
+                showStatisticScreen();
+                break;
         }
     }
 
@@ -107,16 +106,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void showTransactionScreen() {
         showScreen(new AddTransactionFragment(), AddTransactionFragment.TAG, false);
         findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorItems));
+        tabAddNewTransactionLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+        tabHistoryLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+        tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+
     }
 
     private void showHistoryScreen() {
         showScreen(new HistoryFragment(), HistoryFragment.TAG, false);
         findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.white));
+        tabHistoryLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+        tabAddNewTransactionLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+        tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
 
     }
 
     private void showStatisticScreen() {
         showScreen(new StatisticFragment(), StatisticFragment.TAG, false);
         findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.white));
+        tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+        tabHistoryLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+        tabAddNewTransactionLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
     }
+
 }

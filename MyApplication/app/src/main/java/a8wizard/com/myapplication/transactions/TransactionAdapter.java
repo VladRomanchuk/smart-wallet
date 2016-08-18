@@ -84,9 +84,10 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                 // TODO Auto-generated method stub
                 LayoutInflater inflater = LayoutInflater.from(context);
                 View dialogView = inflater.inflate(R.layout.alertdialog_detailhistory, null);
-                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                final AlertDialog.Builder alert = new AlertDialog.Builder(context);
 
                 alert.setView(dialogView);
+                alert.setCancelable(false);
 
                 TextView dateTitle = (TextView) dialogView
                         .findViewById(R.id.alert_dialog_detail_history_date_title_text);
@@ -98,14 +99,31 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                         .findViewById(R.id.alert_dialog_detail_history_time_text);
                 TextView descriptionBody = (TextView) dialogView
                         .findViewById(R.id.alert_dialog_detail_history_description_text);
+                Button buttonCancel = (Button) dialogView.findViewById(R.id.alert_dialog_history_detail_cancel_button);
+                Button buttonOk = (Button) dialogView.findViewById(R.id.alert_dialog_history_detail_ok_button);
 
                 dateTitle.setText(itemsArrayList.get(position).getDate());
                 priceTitle.setText(Util.formatUSD(itemsArrayList.get(position).getPrice()));
                 dateBody.setText(itemsArrayList.get(position).getDate());
-//                timeBody.setText(itemsArrayList.get(position).getTime());
+                timeBody.setText(itemsArrayList.get(position).getTime());
                 descriptionBody.setText(itemsArrayList.get(position).getDescription());
 
-                alert.show();
+                final AlertDialog show = alert.show();
+
+                buttonCancel.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        show.dismiss();
+                    }
+                });
+
+                buttonOk.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        show.dismiss();
+                    }
+                });
+
             }
         });
 
