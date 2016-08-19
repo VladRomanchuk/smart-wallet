@@ -48,7 +48,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
     public Button bDatePicker;
 
     public long g;
-
+    public String s;
     private Filter planetFilter;
 
     public TransactionAdapter(Context context, ArrayList<TransactionItem> itemsArrayList) {
@@ -92,8 +92,8 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
 
         // 3. get
 //        g = Util.getTimeStamp(,new SimpleDateFormat("hh:mm" ));
-        String s = new SimpleDateFormat("hh:mm").format(new Date(Long.parseLong(itemsArrayList.get(position).getTime())));
-        time.setText(""+s);
+//        String s = new SimpleDateFormat("hh:mm").format(new Date(Long.parseLong(itemsArrayList.get(position).getTime())));
+        time.setText(itemsArrayList.get(position).getTime());
         description.setText(itemsArrayList.get(position).getDescription());
         price.setText(Util.formatUSD(itemsArrayList.get(position).getPrice()));
 
@@ -125,7 +125,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                 dateTitle.setText(itemsArrayList.get(position).getDate());
                 priceTitle.setText(Util.formatUSD(itemsArrayList.get(position).getPrice()));
                 dateBody.setText(itemsArrayList.get(position).getDate());
-                timeBody.setText(new SimpleDateFormat("hh:mm").format(Long.parseLong(itemsArrayList.get(position).getTime())));
+                timeBody.setText(itemsArrayList.get(position).getTime());
                 descriptionBody.setText(itemsArrayList.get(position).getDescription());
 
                 final AlertDialog show = alert.show();
@@ -206,7 +206,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                                 .getDetailTransactions(itemsArrayList
                                         .get(position).getIdTransaction());
 
-                        bTimePicker.setText(new SimpleDateFormat("hh:mm").format(Long.parseLong(itemsArrayList.get(position).getTime())));
+                        bTimePicker.setText(itemsArrayList.get(position).getTime());
                         bDatePicker.setText(transaksi.getDate());
                         ePrice.setText(transaksi.getPrice());
                         eDescription.setText(transaksi.getDescription());
@@ -255,7 +255,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                                         itemsArrayList.get(position).getIdTransaction(),
                                         eDescription.getText().toString(),
                                         ePrice.getText().toString(),
-                                        Long.toString(g),
+                                        bTimePicker.getText().toString(),
                                         bDatePicker.getText().toString(),
                                         Util.getTimeStamp(bTimePicker.getText()
                                                 .toString(), new SimpleDateFormat("HH:mm")));
@@ -380,7 +380,9 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
         String minuteString = minute < 10 ? "0" + minute : "" + minute;
 
         g = Util.getTimeStamp(hourString + ":" + minuteString, new SimpleDateFormat("HH:mm"));
-        String s = new SimpleDateFormat("hh:mm").format(new Date(g));
+        Toast.makeText(context, Long.toString(g), Toast.LENGTH_SHORT).show();
+        s = new SimpleDateFormat("hh:mm").format(new Date(g));
+        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
 
 
         bTimePicker.setText(s);

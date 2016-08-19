@@ -26,12 +26,13 @@
         android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@color/colorItems"
         android:hint="Set Budget"
         android:inputType="number"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
+        android:textColor="@android:color/white"
         android:textColorHint="@android:color/white" />
 
     <include layout="@layout/divider_item" />
@@ -40,9 +41,10 @@
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorItems"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:popupBackground="@color/colorItemSecond" />
+        android:popupBackground="@color/colorItems" />
 
     <include layout="@layout/divider_item" />
 
@@ -51,8 +53,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
+        android:background="@color/colorItems"
         android:paddingTop="10dp"
-        android:popupBackground="@color/colorItemSecond" />
+        android:popupBackground="@color/colorItems" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -124,7 +124,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         for (int i = 0; i < trans.size(); i++) {
             updateBudgetByDate(trans.get(i).getDate() + " "
                             + trans.get(i).getTime(),
-                    Long.parseLong(trans.get(i).getPrice()));
+                    Double.parseDouble(trans.get(i).getPrice()));
 
         }
         if (trans.size() > 0)
@@ -457,8 +457,8 @@ public class SQLHelper extends SQLiteOpenHelper {
         db.execSQL("update tbl_transactions set clock='" + transactionItem.getTime()
                 + "',data='" + transactionItem.getDate() + "',price='"
                 + transactionItem.getPrice() + "',description='"
-                + transactionItem.getDescription() + "',time=" + transactionItem.getTime()
-                + " where idTransactions='" + transactionItem.getIdTransaction() + "'");
+                + transactionItem.getDescription() + "',time='" + transactionItem.getTime()
+                + "' where idTransactions='" + transactionItem.getIdTransaction() + "'");
         Toast.makeText(context, "TransactionItem has been edited", Toast.LENGTH_SHORT)
                 .show();
     }

@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         list.add((new SimpleDateFormat("dd/MM/yyyy")).format(new Date()) + " 24:00:00");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
-        dataAdapter .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(dataAdapter);
 
         bSet.setOnClickListener(new View.OnClickListener() {
@@ -246,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
         View dialogview = inflater.inflate(R.layout.alertdialog_infobudget,null);
         final AlertDialog alert = new AlertDialog.Builder(MainActivity.this).create();
+        alert.setCancelable(false);
 
         final BudgetItem budget = helper.getDetailLastBudget();
 
@@ -254,7 +255,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView tCategory = (TextView) dialogview.findViewById(R.id.textView4);
         TextView tAmount = (TextView) dialogview.findViewById(R.id.textView5);
         TextView tLeft = (TextView) dialogview.findViewById(R.id.textView6);
-        Button bReset = (Button) dialogview.findViewById(R.id.button1);
+        Button bCancel = (Button) dialogview.findViewById(R.id.button1);
+        Button bReset = (Button) dialogview.findViewById(R.id.button2);
 
         tStartDate.setText(Util.getDateString(budget.getTimeStartDate(), new SimpleDateFormat("dd/MM/yy kk:mm:ss")));
         tEndDate.setText(Util.getDateString(budget.getTimeEndDate(), new SimpleDateFormat("dd/MM/yy kk:mm:ss")));
@@ -271,6 +273,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 helper.deleteBudget(budget.getIdBudget());
                 showAlertInsertBudget();
 
+            }
+        });
+
+        bCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
             }
         });
 

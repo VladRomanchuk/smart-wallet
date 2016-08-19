@@ -1,11 +1,13 @@
 package a8wizard.com.myapplication.transactions;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +70,14 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
     }
 
     private void colorizeFocusItem(boolean focus, View view) {
+
+        InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (manager.isAcceptingText()) {
+            Toast.makeText(getActivity(), "Qwer", Toast.LENGTH_SHORT).show();
+            focus = true;
+        } else {
+            focus = false;
+        }
         if (focus) {
             view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
         } else {
@@ -133,7 +144,7 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
                 Util.getTimeStamp(binding.transactionTimePickerTextView.getText().toString(), new SimpleDateFormat("HH:mm")));
         helper.addTransaction(transactionItem);
         helper.updateBudgetByDate(binding.transactionDatePickerTextView.getText().toString() +
-                binding.transactionTimePickerTextView.getText().toString(),
+                        binding.transactionTimePickerTextView.getText().toString(),
                 Double.parseDouble(binding.transactionPriceInputText.getText().toString()) * (-1));
 
     }
