@@ -10,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.paolorotolo.appintro.AppIntro;
 
@@ -17,6 +19,7 @@ import a8wizard.com.myapplication.MainActivity;
 import a8wizard.com.myapplication.R;
 
 public class IntroScreenActivity extends AppIntro {
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,9 +36,12 @@ public class IntroScreenActivity extends AppIntro {
             ed.commit();
         }
 
-        addSlide(new IntroFirstFragment());
-        addSlide(new IntroSecondFragment());
-        addSlide(new IntroThirtFragment());
+
+
+        new IntroFragment();
+        addSlide(IntroFragment.newInstance(getResources().getString(R.string.title_intro_first), getResources().getString(R.string.intro_first_description), R.drawable.logo_intro_first));
+        addSlide(IntroFragment.newInstance(getResources().getString(R.string.title_intro_second), getResources().getString(R.string.intro_second_description), R.drawable.logo_intro_second));
+        addSlide(IntroFragment.newInstance(getResources().getString(R.string.title_intro_third), getResources().getString(R.string.intro_third_description), R.drawable.logo_intro_third));
 
         setGoBackLock(true);
         showSkipButton(true);
