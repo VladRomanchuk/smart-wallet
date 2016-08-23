@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tabAddNewTransactionLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
         tabHistoryLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-        setTextToolbar("Add Transaction");
+        toolbarTextView.setText("Add Transaction");
     }
 
     private void showHistoryScreen() {
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tabHistoryLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
         tabAddNewTransactionLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-        setTextToolbar("History");
+        toolbarTextView.setText("History");
     }
 
     private void showStatisticScreen() {
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
         tabHistoryLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         tabAddNewTransactionLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-        setTextToolbar("Statistic");
+        toolbarTextView.setText("Statistic");
     }
 
     private void setTextToolbar(String toolbarText) {
@@ -213,8 +213,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 new SimpleDateFormat("dd/MM/yyyy")).format(startDate),
                                 (new SimpleDateFormat("dd/MM/yyyy")).format(endDate),
                                 spinner.getSelectedItem().toString(),
-                                eSetBudget.getText().toString(), eSetBudget.getText().toString(),
+                                eSetBudget.getText().toString(),
+                                eSetBudget.getText().toString(),
                                 startDate.getTime(), endDate.getTime());
+
 
                         helper.addBudget(budget);
 

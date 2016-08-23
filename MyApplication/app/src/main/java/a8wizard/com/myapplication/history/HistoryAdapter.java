@@ -67,6 +67,7 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
         TextView total = (TextView) rowView.findViewById(R.id.textView2);
         TextView jumlah = (TextView) rowView.findViewById(R.id.textView3);
 
+
         tanggal.setText((itemsArrayList.get(position).getDate()));
         total.setText(itemsArrayList.get(position).getSum());
         jumlah.setText(Util.formatUSD(itemsArrayList.get(position).getTotal()));
@@ -77,12 +78,11 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
 
                 ArrayList<TransactionItem> listTransaction = new ArrayList<TransactionItem>();
                 SQLHelper helper = new SQLHelper(context);
-
+                HistoryFragment.backButton.setVisibility(View.VISIBLE);
                 listTransaction = helper.getAllTransactionByTanggal(itemsArrayList.get(position).getDate());
                 HistoryFragment.transactionAdapter = new TransactionAdapter(context, listTransaction);
 
                 HistoryFragment.listItem.setAdapter(HistoryFragment.transactionAdapter);
-                HistoryFragment.backButton.setVisibility(View.VISIBLE);
                 HistoryFragment.adapterStatus = 2;
 
                 HistoryFragment.dateTitle.setText(R.string.time_history_row);
@@ -97,10 +97,8 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
                 LayoutInflater inflater = LayoutInflater.from(context);
                 View dialogview = inflater.inflate(R.layout.alert_delete, null);
                 final AlertDialog alert = new AlertDialog.Builder(context).create();
-                final Button bCancel = (Button) dialogview
-                        .findViewById(R.id.cancel_button);
-                final Button bOk = (Button) dialogview
-                        .findViewById(R.id.ok_button);
+                final Button bCancel = (Button) dialogview.findViewById(R.id.cancel_button);
+                final Button bOk = (Button) dialogview.findViewById(R.id.ok_button);
 
                 bOk.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -149,6 +147,14 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
         }
     }
 
+    @Override
+    public Filter getFilter() {
+        if (planetFilter == null)
+            planetFilter = new PlanetFilter();
+
+        return planetFilter;
+    }
+
     private class PlanetFilter extends Filter {
 
         @Override
@@ -161,19 +167,25 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
                 results.count = oriItemsArrayList.size();
             } else {
                 List<HistoryItem> nPlanetList = new ArrayList<HistoryItem>();
+
                 for (int i = 0; i < itemsArrayList.size(); i++) {
                     if (itemsArrayList.get(i).getDate()
                             .toUpperCase()
-                            .startsWith(constraint.toString().toUpperCase()) || itemsArrayList
+                            .startsWith(constraint.toString().toUpperCase())
+                            || itemsArrayList
                             .get(i)
                             .getTotal()
                             .toUpperCase()
-                            .startsWith(constraint.toString().toUpperCase()) || itemsArrayList
+                            .startsWith(
+                                    constraint.toString().toUpperCase())
+                            || itemsArrayList
                             .get(i)
-                            .getSum()
+                            .getTotal()
                             .toUpperCase()
-                            .startsWith(constraint.toString().toUpperCase())) {
+                            .startsWith(
+                                    constraint.toString().toUpperCase())) {
                         nPlanetList.add(itemsArrayList.get(i));
+
                     }
                 }
 

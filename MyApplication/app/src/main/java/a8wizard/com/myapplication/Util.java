@@ -104,28 +104,6 @@ public class Util {
             return false;
         }
 
-        // SQLHelper helper = new SQLHelper(context);
-        // if (helper.getDetailLastBudget() != null) {
-        // Budget budget = helper.getDetailLastBudget();
-        //
-        //
-        // Date nowDate;
-        // try {
-        // nowDate = sdf.parse(sdf.format((new Date())));
-        // Date startDate = sdf.parse(budget.getStartDate());
-        // Date endDate = sdf.parse(budget.getEndDate());
-        //
-        // return (nowDate.after(startDate) && nowDate.before(endDate))
-        // || (nowDate.equals(startDate))
-        // || (nowDate.equals(endDate));
-        // } catch (ParseException e) {
-        // // TODO Auto-generated catch block
-        // return false;
-        // }
-        //
-        // } else {
-        // return false;
-        // }
     }
 
     public static void updateWidget(Context context) {

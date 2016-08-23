@@ -7,18 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
@@ -26,10 +20,9 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
-import a8wizard.com.myapplication.SQLHelper;
 import a8wizard.com.myapplication.R;
+import a8wizard.com.myapplication.SQLHelper;
 import a8wizard.com.myapplication.Util;
 import a8wizard.com.myapplication.databinding.FragmentTransactionAddBinding;
 
@@ -73,7 +66,6 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
 
         InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (manager.isAcceptingText()) {
-            Toast.makeText(getActivity(), "Qwer", Toast.LENGTH_SHORT).show();
             focus = true;
         } else {
             focus = false;

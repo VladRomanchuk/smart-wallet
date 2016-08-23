@@ -2,8 +2,6 @@ package a8wizard.com.myapplication.transactions;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +28,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import a8wizard.com.myapplication.MainActivity;
-import a8wizard.com.myapplication.SQLHelper;
 import a8wizard.com.myapplication.R;
+import a8wizard.com.myapplication.SQLHelper;
 import a8wizard.com.myapplication.Util;
 import a8wizard.com.myapplication.history.HistoryFragment;
 
@@ -90,9 +88,6 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
         final TextView description = (TextView) rowView.findViewById(R.id.textView2);
         TextView price = (TextView) rowView.findViewById(R.id.textView3);
 
-        // 3. get
-//        g = Util.getTimeStamp(,new SimpleDateFormat("hh:mm" ));
-//        String s = new SimpleDateFormat("hh:mm").format(new Date(Long.parseLong(itemsArrayList.get(position).getTime())));
         time.setText(itemsArrayList.get(position).getTime());
         description.setText(itemsArrayList.get(position).getDescription());
         price.setText(Util.formatUSD(itemsArrayList.get(position).getPrice()));
@@ -380,10 +375,7 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
         String minuteString = minute < 10 ? "0" + minute : "" + minute;
 
         g = Util.getTimeStamp(hourString + ":" + minuteString, new SimpleDateFormat("HH:mm"));
-        Toast.makeText(context, Long.toString(g), Toast.LENGTH_SHORT).show();
         s = new SimpleDateFormat("hh:mm").format(new Date(g));
-        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-
 
         bTimePicker.setText(s);
     }

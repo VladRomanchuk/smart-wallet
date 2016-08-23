@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     public static ListView listItem;
     public static Button backButton;
     public static Button searchButton;
+    public static EditText searchEditText;
     public static TextView dateTitle, transactionTitle, totalTitle;
 
     private ArrayList<HistoryItem> listHistory;
@@ -49,9 +51,9 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         binding.historyLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
 
         setupDB();
-        setupButton();
         defineView();
-        fillList();
+        setupButton();
+
         binding.searchEditText.addTextChangedListener(new TextWatcher() {
 
             public void onTextChanged(CharSequence arg0, int arg1, int arg2,
@@ -64,15 +66,13 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
 
             public void beforeTextChanged(CharSequence arg0, int arg1,
                                           int arg2, int arg3) {
-                // TODO Auto-generated method stub
 
             }
 
             public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-
             }
         });
+        fillList();
 
         return binding.getRoot();
     }
@@ -84,6 +84,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         transactionTitle = binding.historyTransactionTitle;
         totalTitle = binding.historyTotalTitle;
         listItem = binding.listHistory;
+        searchEditText = binding.searchEditText;
     }
 
 
@@ -139,6 +140,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         listHistory = new ArrayList<HistoryItem>();
 
         setupDB();
+
         listHistory = helper.getAllHistory();
         historyAdapter = new HistoryAdapter(getActivity(), listHistory);
 
@@ -146,7 +148,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         HistoryFragment.adapterStatus = 1;
         setTextTextView();
 
-        binding.historyBackButton.setVisibility(View.GONE);
     }
 
     private void setupDB() {

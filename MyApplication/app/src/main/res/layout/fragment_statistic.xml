@@ -1,63 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragment_statistic"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragmentStatistic"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/headerStatistic"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:orientation="vertical">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/colorAccent"
-            android:layout_weight="0.8"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Text"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:visibility="gone" />
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:text="Daily" />
-            </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:orientation="vertical" />
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.12"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:text="Monthly" />
-            </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/dailyLayout"
+            android:layout_width="0dp"
+            android:layout_height="78dp"
+            android:layout_weight="1">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Daily"
+                android:textSize="16sp" />
+        </RelativeLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:text="Yearly" />
-            </RelativeLayout>
-        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/monthlyLayout"
+            android:layout_width="0dp"
+            android:layout_height="78dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Monthly"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/yearlyLayout"
+            android:layout_width="0dp"
+            android:layout_height="78dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:text="Yearly"
+                android:textSize="16sp" />
+        </RelativeLayout>
     </LinearLayout>
-</layout>
+</LinearLayout>
