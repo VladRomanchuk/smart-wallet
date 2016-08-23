@@ -146,6 +146,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
                 break;
 
             case R.id.yearlyLayout:
+                headerView.setText(calendar.get(Calendar.YEAR) + "");
                 dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
                 monthlLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
                 yearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));

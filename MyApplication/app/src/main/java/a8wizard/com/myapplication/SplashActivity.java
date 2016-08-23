@@ -9,22 +9,21 @@ import android.view.WindowManager;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import a8wizard.com.myapplication.intro.IntroScreenActivity;
+
 public class SplashActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // remove title bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
-
 
         TimerTask task = new TimerTask(){
             @Override
             public void run() {
 
-                Intent intentMain = new Intent(SplashActivity.this, MainActivity.class);
+                Intent intentMain = new Intent(SplashActivity.this, IntroScreenActivity.class);
                 startActivity(intentMain);
 
                 SplashActivity.this.finish();

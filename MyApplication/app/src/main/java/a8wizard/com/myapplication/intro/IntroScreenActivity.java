@@ -1,24 +1,73 @@
 package a8wizard.com.myapplication.intro;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
 
+import com.github.paolorotolo.appintro.AppIntro;
+
+import a8wizard.com.myapplication.MainActivity;
 import a8wizard.com.myapplication.R;
 
-public class IntroScreenActivity extends AppCompatActivity {
-
-    private ViewPager mViewPager;
+public class IntroScreenActivity extends AppIntro {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStatusBarColor();
+        SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+        if (pref.getBoolean("activity_executed", false)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            SharedPreferences.Editor ed = pref.edit();
+            ed.putBoolean("activity_executed", true);
+            ed.commit();
+        }
 
-        setContentView(R.layout.into_page);
+        addSlide(new IntroFirstFragment());
+        addSlide(new IntroSecondFragment());
+        addSlide(new IntroThirtFragment());
 
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mViewPager.setAdapter(new IntroAdapter(getSupportFragmentManager()));
-        mViewPager.setPageTransformer(false, new IntroPageTransformer());
+        setGoBackLock(true);
+        showSkipButton(true);
+        setColorDoneText(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+
+        setBarColor(ContextCompat.getColor(getApplicationContext(), android.R.color.white));
+
+        setSeparatorColor(ContextCompat.getColor(getApplicationContext(), android.R.color.white));
+        setIndicatorColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent), ContextCompat.getColor(getApplicationContext(), R.color.colorIndicator));
+
+    }
+
+    @Override
+    public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
+        super.onSlideChanged(oldFragment, newFragment);
+        setFlowAnimation();
+
+
+    }
+
+    private void setStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    @Override
+    public void onDonePressed(Fragment currentFragment) {
+        super.onDonePressed(currentFragment);
+        Intent intent = new Intent(IntroScreenActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 }

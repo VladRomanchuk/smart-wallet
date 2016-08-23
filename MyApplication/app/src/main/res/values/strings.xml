@@ -23,6 +23,12 @@
 
     <string name="alert_dialog_detail_history">16.08.2016</string>
     <string name="alert_dialog_detail_history_price">$ 116</string>
+    <string name="intro_first_description">Tired of losing your money\n and never know where and how much? Forget about this and use Smart Wallet\n to control all your costs</string>
+    <string name="intro_second_description">Tired of losing your money\n and never know where and how much? Forget about this and use Smart Wallet\n to control all your costs</string>
+    <string name="intro_third_description">Tired of losing your money\n and never know where and how much? Forget about this and use Smart Wallet\n to control all your costs</string>
+    <string name="title_intro_first">Control your money</string>
+    <string name="title_intro_second">Control your money</string>
+    <string name="title_intro_third">Control your money</string>
 
 
     <string-array name="category_array">

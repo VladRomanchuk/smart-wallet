@@ -8,4 +8,5 @@
     <color name="colorBackButton">#f6a97a</color>
     <color name="colorItems">#fdd471</color>
     <color name="colorItemSecond">#fee9b8</color>
+    <color name="colorIndicator">#dddddd</color>
 </resources>
