@@ -34,14 +34,22 @@ public class IntroFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_intro, container, false);
-        titleTextView = (TextView) view.findViewById(R.id.title_intro);
-        descriptionTitleTextView = (TextView) view.findViewById(R.id.description_intro);
-        logoImageView = (ImageView) view.findViewById(R.id.logo_intro);
 
+        defineView(view);
+        setText();
+
+        return view;
+    }
+
+    private void defineView(View v){
+        titleTextView = (TextView) v.findViewById(R.id.title_intro);
+        descriptionTitleTextView = (TextView) v.findViewById(R.id.description_intro);
+        logoImageView = (ImageView) v.findViewById(R.id.logo_intro);
+    }
+
+    private void setText(){
         titleTextView.setText(getArguments().getString("title"));
         descriptionTitleTextView.setText(getArguments().getString("description"));
         logoImageView.setImageDrawable(ContextCompat.getDrawable(getActivity(), getArguments().getInt("resources")));
-
-        return view;
     }
 }
