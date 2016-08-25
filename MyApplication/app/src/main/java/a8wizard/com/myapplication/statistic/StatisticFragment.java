@@ -4,29 +4,30 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.achartengine.ChartFactory;
-import org.achartengine.GraphicalView;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import a8wizard.com.myapplication.R;
 import a8wizard.com.myapplication.SQLHelper;
 import a8wizard.com.myapplication.history.HistoryItem;
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.Column;
+import lecho.lib.hellocharts.model.ColumnChartData;
+import lecho.lib.hellocharts.model.ComboLineColumnChartData;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.SubcolumnValue;
+import lecho.lib.hellocharts.util.ChartUtils;
+import lecho.lib.hellocharts.view.ComboLineColumnChartView;
 
 public class StatisticFragment extends Fragment implements View.OnClickListener {
 
@@ -41,12 +42,9 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     private RelativeLayout monthlLayout;
     private RelativeLayout yearLayout;
     private TextView headerView;
-
-    private XYSeries incomeSeries;
-    private XYMultipleSeriesDataset dataSet;
-    private XYSeriesRenderer incomeRenderer;
-    private XYMultipleSeriesRenderer multiRenderer;
     private Calendar calendar;
+    public static final int[] COLORS = new int[]{Color.parseColor("#f6a97a"), Color.parseColor("#fdd471")};
+
 
     @Nullable
     @Override
@@ -54,16 +52,22 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
 
         View view = inflater.inflate(R.layout.fragment_statistic, container, false);
 
+        if (savedInstanceState == null) {
+            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+        }
+
         calendar = Calendar.getInstance();
         helper = new SQLHelper(getActivity());
 
         defineLayout(view);
         defineView(view);
         setupLayout();
-        showDayStatistic(view);
-
 
         return view;
+    }
+
+    public static final int colorColums() {
+        return COLORS[COLORS.length - 1];
     }
 
     private void defineView(View view) {
@@ -77,7 +81,6 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     }
 
     private void defineLayout(View v) {
-        chart = (LinearLayout) v.findViewById(R.id.chart);
         dayLayout = (RelativeLayout) v.findViewById(R.id.dailyLayout);
         monthlLayout = (RelativeLayout) v.findViewById(R.id.monthlyLayout);
         yearLayout = (RelativeLayout) v.findViewById(R.id.yearlyLayout);
@@ -85,96 +88,113 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
 
     }
 
-
-    private View createGraph() {
-        incomeSeries = new XYSeries("Price");
-
-        // Adding data to Income and Expense Series
-        for (int i = 0; i < historyItems.size(); i++) {
-            incomeSeries.add(i,
-                    Double.parseDouble(historyItems.get(i).getTotal()));
-
-        }
-
-        dataSet = new XYMultipleSeriesDataset();
-        dataSet.addSeries(incomeSeries);
-
-        // Creating XYSeriesRenderer to customize incomeSeries
-        incomeRenderer = new XYSeriesRenderer();
-        incomeRenderer.setColor(Color.rgb(130, 130, 230));
-        incomeRenderer.setFillPoints(true);
-        incomeRenderer.setLineWidth(2);
-        incomeRenderer.setDisplayChartValues(true);
-
-        // Creating a XYMultipleSeriesRenderer to customize the whole chart
-        multiRenderer = new XYMultipleSeriesRenderer();
-        multiRenderer.setXLabels(0);
-        multiRenderer.setChartTitle("Cost Tracker Chart");
-        multiRenderer.setXTitle("Year");
-        multiRenderer.setYTitle("Amount");
-        multiRenderer.setZoomButtonsVisible(true);
-        for (int i = 0; i < historyItems.size(); i++) {
-            multiRenderer.addXTextLabel(i, historyItems.get(i).getDate());
-        }
-
-        multiRenderer.addSeriesRenderer(incomeRenderer);
-        GraphicalView chartView = ChartFactory.getLineChartView(getActivity(),
-                dataSet, multiRenderer);
-
-        return chartView;
-    }
-
     @Override
     public void onClick(View view) {
 
-        switch (view.getId()) {
-            case R.id.dailyLayout:
-                showDayStatistic(view);
-                headerView.setVisibility(View.VISIBLE);
-                headerView.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)) + ", " + new SimpleDateFormat("MMMM").format(calendar.getTime()));
-                break;
+    }
 
-            case R.id.monthlyLayout:
-                headerView.setVisibility(View.VISIBLE);
-                headerView.setText(new SimpleDateFormat("MMMM").format(calendar.getTime()) + ", " + calendar.get(Calendar.YEAR));
-                dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-                monthlLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
-                yearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-                removeView();
-                historyItems = helper.getAllMonthlyHistory();
-                addView();
-                break;
+    public static class PlaceholderFragment extends Fragment {
 
-            case R.id.yearlyLayout:
-                headerView.setText(calendar.get(Calendar.YEAR) + "");
-                dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-                monthlLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-                yearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
-                removeView();
-                historyItems = helper.getAllYearlyHistory();
-                addView();
-                break;
+        private ComboLineColumnChartView chart;
+        private ComboLineColumnChartData data;
+
+
+        private int numberOfLines = 1;
+        private int maxNumberOfLines = 4;
+        private int numberOfPoints = 12;
+
+        float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
+
+        private boolean hasAxes = true;
+        private boolean hasPoints = true;
+        private boolean hasLines = true;
+        private boolean isCubic = false;
+        private boolean hasLabels = false;
+
+        public PlaceholderFragment() {
         }
-    }
 
-    private void removeView() {
-        chart.removeAllViews();
-    }
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            setHasOptionsMenu(true);
+            View rootView = inflater.inflate(R.layout.fragment_combo_line_column_chart, container, false);
 
-    private void addView() {
-        chart.addView(createGraph());
-    }
+            chart = (ComboLineColumnChartView) rootView.findViewById(R.id.chart);
 
-    private void showDayStatistic(View view) {
-        headerView.setVisibility(View.VISIBLE);
-        headerView.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)) + ", " + new SimpleDateFormat("MMMM").format(calendar.getTime()));
+            generateValues();
+            generateData();
 
-        dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
-        monthlLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-        yearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+            return rootView;
+        }
 
-        removeView();
-        historyItems = helper.getAllHistory();
-        addView();
+        private void generateValues() {
+            for (int i = 0; i < maxNumberOfLines; ++i) {
+                for (int j = 0; j < numberOfPoints; ++j) {
+                    randomNumbersTab[i][j] = (float) Math.random() * 10f + 5;
+                }
+            }
+        }
+
+        private void generateData() {
+            data = new ComboLineColumnChartData(generateColumnData(), generateLineData());
+
+            if (hasAxes) {
+                Axis axisX = new Axis();
+                Axis axisY = new Axis().setHasLines(true);
+                data.setAxisXBottom(axisX);
+                data.setAxisYLeft(axisY);
+            } else {
+                data.setAxisXBottom(null);
+                data.setAxisYLeft(null);
+            }
+
+            chart.setComboLineColumnChartData(data);
+        }
+
+        private LineChartData generateLineData() {
+
+            List<Line> lines = new ArrayList<Line>();
+            for (int i = 0; i < numberOfLines; ++i) {
+
+                List<PointValue> values = new ArrayList<PointValue>();
+                for (int j = 0; j < numberOfPoints; ++j) {
+                    values.add(new PointValue(j, randomNumbersTab[i][j]));
+                }
+
+                Line line = new Line(values);
+                line.setColor(COLORS[i]);
+                line.setCubic(isCubic);
+                line.setHasLabels(hasLabels);
+                line.setHasLines(hasLines);
+                line.setHasPoints(hasPoints);
+                lines.add(line);
+            }
+
+            LineChartData lineChartData = new LineChartData(lines);
+
+            return lineChartData;
+
+        }
+
+        private ColumnChartData generateColumnData() {
+            int numSubColumns = 1;
+            int numColumns = 12;
+            List<Column> columns = new ArrayList<Column>();
+            List<SubcolumnValue> values;
+
+            for (int i = 0; i < numColumns; ++i) {
+
+                values = new ArrayList<SubcolumnValue>();
+                for (int j = 0; j < numSubColumns; ++j) {
+                    values.add(new SubcolumnValue((float) Math.random() * 50 + 5, colorColums()));
+                }
+
+                columns.add(new Column(values));
+            }
+
+            ColumnChartData columnChartData = new ColumnChartData(columns);
+            return columnChartData;
+        }
+
     }
 }
