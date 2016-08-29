@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,14 +27,13 @@ import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.SubcolumnValue;
-import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.ComboLineColumnChartView;
 
 public class StatisticFragment extends Fragment implements View.OnClickListener {
 
     public static final String TAG = "StatisticFragment";
 
-    private SQLHelper helper;
+    private static SQLHelper helper;
     private ArrayList<HistoryItem> historyItems = new ArrayList<HistoryItem>();
 
     private LinearLayout chart;
@@ -43,6 +43,8 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     private RelativeLayout yearLayout;
     private TextView headerView;
     private Calendar calendar;
+    private static ArrayList<HistoryItem> listHistory = new ArrayList<HistoryItem>();
+
     public static final int[] COLORS = new int[]{Color.parseColor("#f6a97a"), Color.parseColor("#fdd471")};
 
 
@@ -64,10 +66,6 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
         setupLayout();
 
         return view;
-    }
-
-    public static final int colorColums() {
-        return COLORS[COLORS.length - 1];
     }
 
     private void defineView(View view) {
@@ -98,12 +96,9 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
         private ComboLineColumnChartView chart;
         private ComboLineColumnChartData data;
 
+        private int maxNumberOfLines = 200;
 
-        private int numberOfLines = 1;
-        private int maxNumberOfLines = 4;
-        private int numberOfPoints = 12;
-
-        float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
+        float[] randomNumbersTab = new float[maxNumberOfLines];
 
         private boolean hasAxes = true;
         private boolean hasPoints = true;
@@ -120,6 +115,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
             View rootView = inflater.inflate(R.layout.fragment_combo_line_column_chart, container, false);
 
             chart = (ComboLineColumnChartView) rootView.findViewById(R.id.chart);
+            listHistory = helper.getAllHistory();
 
             generateValues();
             generateData();
@@ -128,10 +124,8 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
         }
 
         private void generateValues() {
-            for (int i = 0; i < maxNumberOfLines; ++i) {
-                for (int j = 0; j < numberOfPoints; ++j) {
-                    randomNumbersTab[i][j] = (float) Math.random() * 10f + 5;
-                }
+            for (int i = 0; i < listHistory.size(); ++i) {
+                randomNumbersTab[i] = Float.parseFloat(listHistory.get(i).getTotal());
             }
         }
 
@@ -154,15 +148,16 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
         private LineChartData generateLineData() {
 
             List<Line> lines = new ArrayList<Line>();
-            for (int i = 0; i < numberOfLines; ++i) {
+            for (int i = 0; i < 1; ++i) {
 
                 List<PointValue> values = new ArrayList<PointValue>();
-                for (int j = 0; j < numberOfPoints; ++j) {
-                    values.add(new PointValue(j, randomNumbersTab[i][j]));
+                for (int j = 0; j < listHistory.size(); ++j) {
+                    values.add(new PointValue(j, Float.parseFloat(listHistory.get(j).getTotal())));
                 }
 
                 Line line = new Line(values);
-                line.setColor(COLORS[i]);
+                line.setColor(Color.parseColor("#fee9b8"));
+                line.setPointColor(ContextCompat.getColor(getActivity(), R.color.colorButtonTransactions));
                 line.setCubic(isCubic);
                 line.setHasLabels(hasLabels);
                 line.setHasLines(hasLines);
@@ -177,18 +172,18 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
         }
 
         private ColumnChartData generateColumnData() {
-            int numSubColumns = 1;
-            int numColumns = 12;
             List<Column> columns = new ArrayList<Column>();
             List<SubcolumnValue> values;
 
-            for (int i = 0; i < numColumns; ++i) {
-
+            for (int i = 0; i < listHistory.size(); ++i) {
                 values = new ArrayList<SubcolumnValue>();
-                for (int j = 0; j < numSubColumns; ++j) {
-                    values.add(new SubcolumnValue((float) Math.random() * 50 + 5, colorColums()));
-                }
+                if (columns.size() % 2 == 0) {
+                    values.add(new SubcolumnValue(Float.parseFloat(listHistory.get(i).getTotal()), Color.parseColor("#fdd471")));
 
+                } else {
+                    values.add(new SubcolumnValue(Float.parseFloat(listHistory.get(i).getTotal()), Color.parseColor("#fee9b8")));
+
+                }
                 columns.add(new Column(values));
             }
 
