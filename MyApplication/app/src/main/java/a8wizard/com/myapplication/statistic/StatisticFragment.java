@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -36,7 +37,6 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     private static SQLHelper helper;
     private ArrayList<HistoryItem> historyItems = new ArrayList<HistoryItem>();
 
-    private LinearLayout chart;
     private LinearLayout fragmentStatistic;
     private RelativeLayout dayLayout;
     private RelativeLayout monthlLayout;
@@ -47,16 +47,11 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
 
     public static final int[] COLORS = new int[]{Color.parseColor("#f6a97a"), Color.parseColor("#fdd471")};
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_statistic, container, false);
-
-        if (savedInstanceState == null) {
-            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
-        }
 
         calendar = Calendar.getInstance();
         helper = new SQLHelper(getActivity());
@@ -64,6 +59,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
         defineLayout(view);
         defineView(view);
         setupLayout();
+        showDayStatistic(view);
 
         return view;
     }
@@ -88,7 +84,50 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.dailyLayout:
+                showDayStatistic(view);
+                break;
 
+            case R.id.monthlyLayout:
+                showMonthlyStatistic(view);
+                break;
+
+            case R.id.yearlyLayout:
+                showYearlyStatistic(view);
+                break;
+        }
+    }
+
+    private void showYearlyStatistic(View view) {
+        listHistory = helper.getAllHistory();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+        headerView.setText(calendar.get(Calendar.YEAR) + "");
+        dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+        monthlLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+        yearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+        historyItems = helper.getAllYearlyHistory();
+    }
+
+    private void showDayStatistic(View view) {
+        listHistory = helper.getAllHistory();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+        headerView.setVisibility(View.VISIBLE);
+        headerView.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)) + ", " + new SimpleDateFormat("MMMM").format(calendar.getTime()));
+        dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+        monthlLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+        yearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+    }
+
+    private void showMonthlyStatistic(View view) {
+        listHistory = helper.getAllMonthlyHistory();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+        headerView.setVisibility(View.VISIBLE);
+        headerView.setText(new SimpleDateFormat("MMMM").format(calendar.getTime()) + ", " + calendar.get(Calendar.YEAR));
+        dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+        monthlLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+        yearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+        historyItems = helper.getAllMonthlyHistory();
     }
 
     public static class PlaceholderFragment extends Fragment {
@@ -115,7 +154,6 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
             View rootView = inflater.inflate(R.layout.fragment_combo_line_column_chart, container, false);
 
             chart = (ComboLineColumnChartView) rootView.findViewById(R.id.chart);
-            listHistory = helper.getAllHistory();
 
             generateValues();
             generateData();
@@ -190,6 +228,6 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
             ColumnChartData columnChartData = new ColumnChartData(columns);
             return columnChartData;
         }
-
     }
 }
+
