@@ -194,12 +194,11 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
                 }
 
                 Line line = new Line(values);
-                line.setColor(Color.parseColor("#fee9b8"));
-                line.setPointColor(ContextCompat.getColor(getActivity(), R.color.colorButtonTransactions));
-                line.setCubic(isCubic);
-                line.setHasLabels(hasLabels);
+                line.setColor(Color.parseColor("#fdd471"));
+                line.setPointColor(Color.parseColor("#f17022"));
                 line.setHasLines(hasLines);
                 line.setHasPoints(hasPoints);
+                line.setFilled(true);
                 lines.add(line);
             }
 
@@ -210,17 +209,15 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
         }
 
         private ColumnChartData generateColumnData() {
+
             List<Column> columns = new ArrayList<Column>();
             List<SubcolumnValue> values;
-
             for (int i = 0; i < listHistory.size(); ++i) {
                 values = new ArrayList<SubcolumnValue>();
                 if (columns.size() % 2 == 0) {
-                    values.add(new SubcolumnValue(Float.parseFloat(listHistory.get(i).getTotal()), Color.parseColor("#fdd471")));
-
+                    values.add(new SubcolumnValue(Float.parseFloat(listHistory.get(i).getTotal()), Color.parseColor("#00ffffff")));
                 } else {
-                    values.add(new SubcolumnValue(Float.parseFloat(listHistory.get(i).getTotal()), Color.parseColor("#fee9b8")));
-
+                    values.add(new SubcolumnValue(Float.parseFloat(listHistory.get(i).getTotal()), Color.parseColor("#00ffffff")));
                 }
                 columns.add(new Column(values));
             }
