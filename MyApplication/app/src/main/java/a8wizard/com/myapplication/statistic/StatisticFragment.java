@@ -17,6 +17,9 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import a8wizard.com.myapplication.R;
@@ -109,6 +112,12 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     private void showYearlyStatistic(View view) {
         containerChart.removeAllViews();
         listHistory = helper.getAllYearlyHistory();
+        Collections.sort(listHistory, new Comparator<HistoryItem>() {
+            @Override
+            public int compare(HistoryItem historyItem, HistoryItem t1) {
+                return historyItem.getDate().compareTo(t1.getDate());
+            }
+        });
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         headerView.setText(calendar.get(Calendar.YEAR) + "");
         dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
@@ -120,6 +129,12 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     private void showDayStatistic(View view) {
         containerChart.removeAllViews();
         listHistory = helper.getAllDay();
+        Collections.sort(listHistory, new Comparator<HistoryItem>() {
+            @Override
+            public int compare(HistoryItem historyItem, HistoryItem t1) {
+                return historyItem.getDate().compareTo(t1.getDate());
+            }
+        });
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         headerView.setVisibility(View.VISIBLE);
         headerView.setText(new SimpleDateFormat("MMMM").format(calendar.getTime()));
@@ -131,6 +146,12 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     private void showMonthlyStatistic(View view) {
         containerChart.removeAllViews();
         listHistory = helper.getAllMonthlyHistory();
+        Collections.sort(listHistory, new Comparator<HistoryItem>() {
+            @Override
+            public int compare(HistoryItem historyItem, HistoryItem t1) {
+                return historyItem.getDate().compareTo(t1.getDate());
+            }
+        });
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         headerView.setVisibility(View.VISIBLE);
         headerView.setText(new SimpleDateFormat("MMMM").format(calendar.getTime()) + ", " + calendar.get(Calendar.YEAR));
@@ -187,12 +208,15 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
             data = new ComboLineColumnChartData(generateColumnData(), generateLineData());
 
             if (hasAxes) {
+                if (listHistory.size() > 0) {
                     axisX.setInside(true);
                     axisX.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
                     axisX.setTextSize(14);
 
                     data.setAxisXBottom(axisX);
                     data.setAxisYLeft(axisY);
+                }
+
             } else {
                 data.setAxisXBottom(null);
                 data.setAxisYLeft(null);

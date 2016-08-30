@@ -55,7 +55,7 @@
             android:gravity="center_vertical"
             android:hint="@string/transaction_item_text_view_price"
             android:textSize="18sp"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/black" />
     </LinearLayout>
@@ -92,7 +92,7 @@
             android:textSize="18sp"
             android:textColor="@android:color/black"
             android:hint="Description"
-            android:inputType="number"
+            android:inputType="text"
             android:textColorHint="@android:color/black" />
     </LinearLayout>
 
