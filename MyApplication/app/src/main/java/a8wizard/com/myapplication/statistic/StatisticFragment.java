@@ -8,9 +8,11 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ import a8wizard.com.myapplication.R;
 import a8wizard.com.myapplication.SQLHelper;
 import a8wizard.com.myapplication.history.HistoryItem;
 import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.ChartData;
 import lecho.lib.hellocharts.model.Column;
 import lecho.lib.hellocharts.model.ColumnChartData;
 import lecho.lib.hellocharts.model.ComboLineColumnChartData;
@@ -28,6 +32,7 @@ import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.SubcolumnValue;
+import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.ComboLineColumnChartView;
 
 public class StatisticFragment extends Fragment implements View.OnClickListener {
@@ -43,6 +48,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     private RelativeLayout yearLayout;
     private TextView headerView;
     private Calendar calendar;
+    private static FrameLayout containerChart;
     private static ArrayList<HistoryItem> listHistory = new ArrayList<HistoryItem>();
 
     public static final int[] COLORS = new int[]{Color.parseColor("#f6a97a"), Color.parseColor("#fdd471")};
@@ -75,6 +81,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     }
 
     private void defineLayout(View v) {
+        containerChart = (FrameLayout) v.findViewById(R.id.container);
         dayLayout = (RelativeLayout) v.findViewById(R.id.dailyLayout);
         monthlLayout = (RelativeLayout) v.findViewById(R.id.monthlyLayout);
         yearLayout = (RelativeLayout) v.findViewById(R.id.yearlyLayout);
@@ -100,7 +107,8 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     }
 
     private void showYearlyStatistic(View view) {
-        listHistory = helper.getAllHistory();
+        containerChart.removeAllViews();
+        listHistory = helper.getAllYearlyHistory();
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         headerView.setText(calendar.get(Calendar.YEAR) + "");
         dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
@@ -110,16 +118,18 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     }
 
     private void showDayStatistic(View view) {
-        listHistory = helper.getAllHistory();
+        containerChart.removeAllViews();
+        listHistory = helper.getAllDay();
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         headerView.setVisibility(View.VISIBLE);
-        headerView.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)) + ", " + new SimpleDateFormat("MMMM").format(calendar.getTime()));
+        headerView.setText(new SimpleDateFormat("MMMM").format(calendar.getTime()));
         dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
         monthlLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
         yearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
     }
 
     private void showMonthlyStatistic(View view) {
+        containerChart.removeAllViews();
         listHistory = helper.getAllMonthlyHistory();
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         headerView.setVisibility(View.VISIBLE);
@@ -136,14 +146,15 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
         private ComboLineColumnChartData data;
 
         private int maxNumberOfLines = 200;
+        public List<AxisValue> axisValuesForX;
+        Axis axisX;
+        Axis axisY;
 
         float[] randomNumbersTab = new float[maxNumberOfLines];
 
         private boolean hasAxes = true;
         private boolean hasPoints = true;
         private boolean hasLines = true;
-        private boolean isCubic = false;
-        private boolean hasLabels = false;
 
         public PlaceholderFragment() {
         }
@@ -155,8 +166,13 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
 
             chart = (ComboLineColumnChartView) rootView.findViewById(R.id.chart);
 
+            axisValuesForX = new ArrayList<AxisValue>();
+            axisY = new Axis().setHasLines(true);
+
+            containerChart.removeAllViews();
             generateValues();
             generateData();
+
 
             return rootView;
         }
@@ -171,10 +187,12 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
             data = new ComboLineColumnChartData(generateColumnData(), generateLineData());
 
             if (hasAxes) {
-                Axis axisX = new Axis();
-                Axis axisY = new Axis().setHasLines(true);
-                data.setAxisXBottom(axisX);
-                data.setAxisYLeft(axisY);
+                    axisX.setInside(true);
+                    axisX.setTextColor(ContextCompat.getColor(getActivity(), android.R.color.black));
+                    axisX.setTextSize(14);
+
+                    data.setAxisXBottom(axisX);
+                    data.setAxisYLeft(axisY);
             } else {
                 data.setAxisXBottom(null);
                 data.setAxisYLeft(null);
@@ -182,24 +200,32 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
 
             chart.setComboLineColumnChartData(data);
         }
-
         private LineChartData generateLineData() {
 
             List<Line> lines = new ArrayList<Line>();
             for (int i = 0; i < 1; ++i) {
-
                 List<PointValue> values = new ArrayList<PointValue>();
+
                 for (int j = 0; j < listHistory.size(); ++j) {
+                    axisValuesForX.add(new AxisValue(j, listHistory.get(j).getDate().toCharArray()));
+
+                    axisX = new Axis(axisValuesForX);
                     values.add(new PointValue(j, Float.parseFloat(listHistory.get(j).getTotal())));
                 }
 
                 Line line = new Line(values);
-                line.setColor(Color.parseColor("#fdd471"));
+                if (line.getValues().size() % 2 == 0) {
+                    line.setColor(Color.parseColor("#fdd471"));
+                } else {
+                    line.setColor(Color.parseColor("#fee9b8"));
+                }
+                line.setAreaTransparency(255);
                 line.setPointColor(Color.parseColor("#f17022"));
                 line.setHasLines(hasLines);
-                line.setHasPoints(hasPoints);
                 line.setFilled(true);
+                line.setHasPoints(hasPoints);
                 lines.add(line);
+                chart.setInteractive(false);
             }
 
             LineChartData lineChartData = new LineChartData(lines);

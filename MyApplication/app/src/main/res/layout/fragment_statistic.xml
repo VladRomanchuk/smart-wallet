@@ -44,6 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="Daily"
                 android:textSize="20sp" />
         </RelativeLayout>
@@ -58,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="Monthly"
                 android:textSize="20sp" />
         </RelativeLayout>
@@ -74,6 +76,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="Yearly"
                 android:textSize="20sp" />
         </RelativeLayout>

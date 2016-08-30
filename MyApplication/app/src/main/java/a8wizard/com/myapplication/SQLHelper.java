@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -339,6 +340,29 @@ public class SQLHelper extends SQLiteOpenHelper {
         return history;
     }
 
+
+    public ArrayList<HistoryItem> getAllDay() {
+        ArrayList<HistoryItem> history = new ArrayList<HistoryItem>();
+
+        String query = "select distinct substr(data,1,5) data, sum(price) total, count(*) sum from tbl_transactions GROUP BY data order by time asc";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // 3. go over each row, build book and add it to list
+        HistoryItem hist = null;
+        if (cursor.moveToFirst()) {
+            do {
+                hist = new HistoryItem(cursor.getString(0), cursor.getString(1),
+                        cursor.getString(2));
+                history.add(hist);
+
+            } while (cursor.moveToNext());
+        }
+
+        return history;
+    }
+
+
     public ArrayList<HistoryItem> getAllMonthlyHistory() {
         ArrayList<HistoryItem> history = new ArrayList<HistoryItem>();
         // 1. build the query
@@ -373,12 +397,13 @@ public class SQLHelper extends SQLiteOpenHelper {
         // String query = "select * from tbl_friendlist";
 
 
-        String query = "select distinct substr(data,7,4) data, sum(price) total, count(*) sum from tbl_transactions GROUP BY data order by time asc";
+        String query = "select distinct substr(data,7) data, sum(price) total, count(*) sum from tbl_transactions GROUP BY data order by time asc";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
         HistoryItem hist = null;
         if (cursor.moveToFirst()) {
+
             do {
                 hist = new HistoryItem(cursor.getString(0), cursor.getString(1),
                         cursor.getString(2));

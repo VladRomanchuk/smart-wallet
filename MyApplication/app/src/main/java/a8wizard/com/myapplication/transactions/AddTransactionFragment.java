@@ -143,7 +143,11 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = dayOfMonth + "." + (++monthOfYear) + "." + year;
+
+        String day = dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth;
+        String month = monthOfYear < 10 ? "0" + (++monthOfYear) : "" + (++monthOfYear);
+
+        String date = day + "." + month + "." + year;
         binding.transactionDatePickerTextView.setText(date);
     }
 
