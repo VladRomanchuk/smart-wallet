@@ -10,6 +10,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -106,6 +108,8 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
             case R.id.add_new_transaction:
                 if (!isEditTextEmpty(binding.transactionPriceInputText, binding.transactionDescriptionInputText)) {
                     addTransaction();
+                    Animation clear = AnimationUtils.loadAnimation(getActivity(), R.anim.alpha);
+                    binding.transactionLayout.startAnimation(clear);
                     binding.transactionPriceInputText.setText("");
                     binding.transactionDescriptionInputText.setText("");
                     binding.transactionPriceInputText.requestFocus();

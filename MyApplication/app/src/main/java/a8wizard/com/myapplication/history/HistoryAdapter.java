@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Filter;
@@ -75,12 +77,16 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
         selector.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-
                 ArrayList<TransactionItem> listTransaction = new ArrayList<TransactionItem>();
+
                 SQLHelper helper = new SQLHelper(context);
                 HistoryFragment.backButton.setVisibility(View.VISIBLE);
                 listTransaction = helper.getAllTransactionByTanggal(itemsArrayList.get(position).getDate());
+                Animation itemClick = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+                HistoryFragment.listItem.setAnimation(itemClick);
                 HistoryFragment.transactionAdapter = new TransactionAdapter(context, listTransaction);
+
+
 
                 HistoryFragment.listItem.setAdapter(HistoryFragment.transactionAdapter);
                 HistoryFragment.adapterStatus = 2;
@@ -88,6 +94,8 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
                 HistoryFragment.dateTitle.setText(R.string.time_history_row);
                 HistoryFragment.transactionTitle.setText(R.string.description_history_row);
                 HistoryFragment.totalTitle.setText(R.string.bill_history_row);
+
+
             }
         });
 
@@ -141,9 +149,9 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
 
     private void itemColorize(int position, View view) {
         if ((position % 2) == 0) {
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorItems));
+            view.setBackground(ContextCompat.getDrawable(context, R.drawable.item_ripple));
         } else {
-            view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorItemSecond));
+            view.setBackground(ContextCompat.getDrawable(context, R.drawable.item_ripple_second));
         }
     }
 

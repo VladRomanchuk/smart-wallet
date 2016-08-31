@@ -118,8 +118,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void showScreen(Fragment fragment, String contentTag, boolean addToBackStack) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-
         if (addToBackStack) {
             transaction.addToBackStack(String.valueOf(System.identityHashCode(fragment)));
         }

@@ -137,7 +137,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
         });
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         headerView.setVisibility(View.VISIBLE);
-        headerView.setText(new SimpleDateFormat("MMMM").format(calendar.getTime()));
+        headerView.setText("Day's");
         dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
         monthlLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
         yearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));

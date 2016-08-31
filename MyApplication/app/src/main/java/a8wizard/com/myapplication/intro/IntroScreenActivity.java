@@ -74,6 +74,7 @@ public class IntroScreenActivity extends AppIntro {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         Intent intent = new Intent(IntroScreenActivity.this, MainActivity.class);
+        overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
         startActivity(intent);
     }
 }
