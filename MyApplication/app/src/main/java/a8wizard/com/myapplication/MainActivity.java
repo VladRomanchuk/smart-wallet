@@ -102,15 +102,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        Fragment f;
+
         switch (view.getId()) {
             case R.id.transaction_tab_layout:
-                showTransactionScreen();
+                f = getSupportFragmentManager().findFragmentByTag("AddTransactionFragment");
+                if (f != null && f instanceof AddTransactionFragment) {
+                } else {
+                    showTransactionScreen();
+                }
                 break;
             case R.id.history_tab_layout:
-                showHistoryScreen();
+                f = getSupportFragmentManager().findFragmentByTag("HistoryFragment");
+                if (f != null && f instanceof HistoryFragment) {
+                } else {
+                    showHistoryScreen();
+                }
                 break;
             case R.id.statistic_tab_layout:
-                showStatisticScreen();
+                f = getSupportFragmentManager().findFragmentByTag("StatisticFragment");
+                if (f != null && f instanceof StatisticFragment) {
+                } else {
+                    showStatisticScreen();
+                }
                 break;
         }
     }
@@ -170,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button bCancel = (Button) dialogview.findViewById(R.id.button2);
 
         final Spinner spinner = (Spinner) dialogview.findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource( MainActivity.this, R.array.category_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.category_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -244,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void showAlertInfoBudget() {
 
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-        View dialogview = inflater.inflate(R.layout.alertdialog_infobudget,null);
+        View dialogview = inflater.inflate(R.layout.alertdialog_infobudget, null);
         final AlertDialog alert = new AlertDialog.Builder(MainActivity.this).create();
         alert.setCancelable(false);
 

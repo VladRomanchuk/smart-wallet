@@ -151,6 +151,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         binding.listHistory.setAdapter(historyAdapter);
         HistoryFragment.adapterStatus = 1;
         setTextTextView();
+        backButton.setVisibility(View.GONE);
 
     }
 

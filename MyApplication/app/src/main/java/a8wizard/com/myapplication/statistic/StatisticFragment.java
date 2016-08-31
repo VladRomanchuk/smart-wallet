@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -67,6 +69,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
 
         defineLayout(view);
         defineView(view);
+
         setupLayout();
         showDayStatistic(view);
 
@@ -107,10 +110,13 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
                 showYearlyStatistic(view);
                 break;
         }
+
     }
 
     private void showYearlyStatistic(View view) {
         containerChart.removeAllViews();
+        Animation slide = AnimationUtils.loadAnimation(getActivity(), R.anim.left_to_right);
+        containerChart.startAnimation(slide);
         listHistory = helper.getAllYearlyHistory();
         Collections.sort(listHistory, new Comparator<HistoryItem>() {
             @Override
@@ -128,6 +134,8 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
 
     private void showDayStatistic(View view) {
         containerChart.removeAllViews();
+        Animation slide = AnimationUtils.loadAnimation(getActivity(), R.anim.left_to_right);
+        containerChart.startAnimation(slide);
         listHistory = helper.getAllDay();
         Collections.sort(listHistory, new Comparator<HistoryItem>() {
             @Override
@@ -145,6 +153,8 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
 
     private void showMonthlyStatistic(View view) {
         containerChart.removeAllViews();
+        Animation slide = AnimationUtils.loadAnimation(getActivity(), R.anim.left_to_right);
+        containerChart.startAnimation(slide);
         listHistory = helper.getAllMonthlyHistory();
         Collections.sort(listHistory, new Comparator<HistoryItem>() {
             @Override
@@ -224,6 +234,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
 
             chart.setComboLineColumnChartData(data);
         }
+
         private LineChartData generateLineData() {
 
             List<Line> lines = new ArrayList<Line>();
