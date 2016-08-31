@@ -20,7 +20,7 @@
             android:gravity="center"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
-            android:text="Actions Transaction"
+            android:text="@string/actions_transaction"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </LinearLayout>
@@ -91,7 +91,7 @@
             android:gravity="bottom"
             android:textSize="18sp"
             android:textColor="@android:color/black"
-            android:hint="Description"
+            android:hint="@string/description_history_row"
             android:inputType="text"
             android:textColorHint="@android:color/black" />
     </LinearLayout>
@@ -124,7 +124,7 @@
             android:background="@android:color/transparent"
             android:gravity="center_vertical"
             android:textSize="18sp"
-            android:text="Date"
+            android:text="@string/date_budget"
             android:textColor="@android:color/black" />
     </LinearLayout>
 
@@ -153,7 +153,7 @@
             android:gravity="center_vertical"
             android:textSize="18sp"
             android:layout_marginLeft="16dp"
-            android:text="Clock"
+            android:text="@string/clock_edit_dialog"
             android:textColor="@android:color/black" />
     </LinearLayout>
 
@@ -162,7 +162,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorButtonTransactions"
-        android:text="Edit"
+        android:text="@string/edit_alert"
         android:textColor="@android:color/white" />
 
 </LinearLayout>

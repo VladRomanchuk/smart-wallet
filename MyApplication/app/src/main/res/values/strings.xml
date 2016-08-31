@@ -30,6 +30,44 @@
     <string name="title_intro_second">Control your money</string>
     <string name="title_intro_third">Control your money</string>
 
+    <string name="title_statistic_day">Days</string>
+    <string name="alert_delete_transaction">Delete Transaction</string>
+    <string name="matter_removal_transaction">Do you want to delete this transaction?</string>
+    <string name="cancel_dialog_delete">Cancel</string>
+    <string name="ok_dialog_delete">OK</string>
+    <string name="actions_dialog_edit">Actions Transaction</string>
+    <string name="action_over_transactions_dialog_edit">Choose action over transactions?</string>
+    <string name="edit_alert">Edit</string>
+    <string name="delete_alert">Delete</string>
+    <string name="clock_edit_dialog">Clock</string>
+    <string name="start_date_budget">Start date</string>
+    <string name="end_date_budget">End date</string>
+    <string name="category_budget">Category</string>
+    <string name="total_budget">Total Budget</string>
+    <string name="left_budget">Left</string>
+    <string name="date_budget">02/04/2015</string>
+    <string name="date_budget_second">02/05/2015</string>
+    <string name="weekly_budget">Weekly</string>
+    <string name="cost_budget">500000</string>
+    <string name="budget_left">256600</string>
+    <string name="back_budget">Back</string>
+    <string name="reset_budget">Reset</string>
+    <string name="add_budget">Add Budget</string>
+    <string name="set_budget">Set Budget</string>
+    <string name="save_budget">Save</string>
+    <string name="total_budget_history">Total</string>
+    <string name="daily_statistic">Daily</string>
+    <string name="monthly_statistic">Monthly</string>
+    <string name="yearly_statistic">Yearly</string>
+    <string name="dollars">＄</string>
+    <string name="id">ID</string>
+    <string name="budget_left_provider">Budget left</string>
+    <string name="start">Start</string>
+    <string name="end_provider">End</string>
+    <string name="budget">Rp. 500.000</string>
+    <string name="name_widget">Smart Wallet Widget</string>
+    <string name="actions_transaction">Actions Transaction</string>
+
 
     <string-array name="category_array">
         <item>Choose your category:</item>

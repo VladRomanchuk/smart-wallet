@@ -5,6 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
+        android:background="@color/colorItems"
         android:id="@+id/transaction_layout"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
@@ -26,7 +27,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="28dp"
                 android:layout_marginStart="28dp"
-                android:text="\uff04"
+                android:text="@string/dollars"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
 

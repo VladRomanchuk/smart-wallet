@@ -16,7 +16,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="center"
-            android:text="Delete Transaction"
+            android:text="@string/alert_delete_transaction"
             android:layout_gravity="center_vertical"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
@@ -35,7 +35,7 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Do you want to delete this transaction?"
+            android:text="@string/matter_removal_transaction"
             android:textColor="@android:color/black"
             android:textSize="20sp" />
     </LinearLayout>
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorItemSecond"
-            android:text="Cancel"
+            android:text="@string/cancel_dialog_delete"
             android:textColor="@android:color/white" />
 
         <Button
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorAccent"
-            android:text="Ok"
+            android:text="@string/ok_dialog_delete"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

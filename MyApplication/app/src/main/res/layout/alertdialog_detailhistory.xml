@@ -117,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:text="Description"
+            android:text="@string/description_history_row"
             android:textAllCaps="false"
             android:textColor="@android:color/black"
             android:textSize="18sp"
@@ -140,7 +140,7 @@
             android:textAllCaps="false"
             android:textSize="18sp"
             android:background="@color/colorItems"
-            android:text="Cancel" />
+            android:text="@string/cancel" />
 
         <Button
             android:layout_width="0dp"
@@ -150,7 +150,7 @@
             android:textAllCaps="false"
             android:textSize="18sp"
             android:background="@color/colorAccent"
-            android:text="Ok" />
+            android:text="@string/ok_dialog_delete" />
 
     </LinearLayout>
 

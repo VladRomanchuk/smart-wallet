@@ -18,7 +18,7 @@
             android:gravity="center"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
-            android:text="Actions Transaction"
+            android:text="@string/actions_dialog_edit"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </LinearLayout>
@@ -38,35 +38,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Start date"
+                android:text="@string/start_date_budget"
                 android:textColor="@android:color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="End date "
+                android:text="@string/end_date_budget"
                 android:textColor="@android:color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Category"
+                android:text="@string/category_budget"
                 android:textColor="@android:color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Total Budget"
+                android:text="@string/total_budget"
                 android:textColor="@android:color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="Left"
+                android:text="@string/left_budget"
                 android:textColor="@android:color/black" />
         </LinearLayout>
 
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:padding="7dp"
                 android:textSize="16sp"
-                android:text="02/04/2015"
+                android:text="@string/date_budget"
                 android:textColor="@android:color/black" />
 
             <TextView
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="7dp"
-                android:text="02/05/2015"
+                android:text="@string/date_budget_second"
                 android:textColor="@android:color/black" />
 
             <TextView
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:padding="7dp"
                 android:textSize="16sp"
-                android:text="Weekly"
+                android:text="@string/weekly_budget"
                 android:textColor="@android:color/black" />
 
             <TextView
@@ -109,7 +109,7 @@
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="500000"
+                android:text="@string/cost_budget"
                 android:textColor="@android:color/black" />
 
             <TextView
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:padding="7dp"
                 android:textSize="16sp"
-                android:text="256600"
+                android:text="@string/budget_left"
                 android:textStyle="bold"
                 android:textColor="@color/colorPrimary" />
         </LinearLayout>
@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorBackButton"
-            android:text="Back"
+            android:text="@string/back_budget"
             android:textColor="@android:color/white" />
         <Button
             android:id="@+id/button2"
@@ -146,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorButtonTransactions"
-            android:text="Reset"
+            android:text="@string/reset_budget"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

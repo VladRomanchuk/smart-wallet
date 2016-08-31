@@ -16,7 +16,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="center"
-            android:text="Actions Transaction"
+            android:text="@string/actions_dialog_edit"
             android:layout_gravity="center_vertical"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
@@ -35,7 +35,7 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Choose action over transactions?"
+            android:text="@string/action_over_transactions_dialog_edit"
             android:textColor="@android:color/black"
             android:textSize="20sp" />
     </LinearLayout>
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorItemSecond"
-            android:text="Edit"
+            android:text="@string/edit_alert"
             android:textColor="@android:color/white" />
 
         <Button
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorAccent"
-            android:text="Delete"
+            android:text="@string/delete_alert"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

@@ -17,7 +17,7 @@
             android:gravity="center"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
-            android:text="Add Budget"
+            android:text="@string/add_budget"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </LinearLayout>
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorItems"
-        android:hint="Set Budget"
+        android:hint="@string/set_budget"
         android:inputType="number"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorBackButton"
-            android:text="Save"
+            android:text="@string/save_budget"
             android:textColor="@android:color/white" />
 
         <Button
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorButtonTransactions"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

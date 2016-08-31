@@ -56,8 +56,6 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     private static FrameLayout containerChart;
     private static ArrayList<HistoryItem> listHistory = new ArrayList<HistoryItem>();
 
-    public static final int[] COLORS = new int[]{Color.parseColor("#f6a97a"), Color.parseColor("#fdd471")};
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -92,7 +90,6 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
         monthlLayout = (RelativeLayout) v.findViewById(R.id.monthlyLayout);
         yearLayout = (RelativeLayout) v.findViewById(R.id.yearlyLayout);
         fragmentStatistic = (LinearLayout) v.findViewById(R.id.fragmentStatistic);
-
     }
 
     @Override
@@ -101,11 +98,9 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
             case R.id.dailyLayout:
                 showDayStatistic(view);
                 break;
-
             case R.id.monthlyLayout:
                 showMonthlyStatistic(view);
                 break;
-
             case R.id.yearlyLayout:
                 showYearlyStatistic(view);
                 break;
@@ -124,6 +119,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
                 return historyItem.getDate().compareTo(t1.getDate());
             }
         });
+
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         headerView.setText(calendar.get(Calendar.YEAR) + "");
         dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
@@ -145,7 +141,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
         });
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         headerView.setVisibility(View.VISIBLE);
-        headerView.setText("Day's");
+        headerView.setText(getResources().getString(R.string.title_statistic_day));
         dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
         monthlLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
         yearLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
@@ -263,18 +259,16 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
                 chart.setInteractive(false);
             }
 
-            LineChartData lineChartData = new LineChartData(lines);
-
-            return lineChartData;
+            return new LineChartData(lines);
 
         }
 
         private ColumnChartData generateColumnData() {
 
-            List<Column> columns = new ArrayList<Column>();
+            List<Column> columns = new ArrayList<>();
             List<SubcolumnValue> values;
             for (int i = 0; i < listHistory.size(); ++i) {
-                values = new ArrayList<SubcolumnValue>();
+                values = new ArrayList<>();
                 if (columns.size() % 2 == 0) {
                     values.add(new SubcolumnValue(Float.parseFloat(listHistory.get(i).getTotal()), Color.parseColor("#00ffffff")));
                 } else {
@@ -283,8 +277,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
                 columns.add(new Column(values));
             }
 
-            ColumnChartData columnChartData = new ColumnChartData(columns);
-            return columnChartData;
+            return new ColumnChartData(columns);
         }
     }
 }

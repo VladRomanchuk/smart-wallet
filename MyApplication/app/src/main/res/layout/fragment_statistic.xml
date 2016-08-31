@@ -15,7 +15,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Text"
+        android:text="@string/edit_alert"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:visibility="gone" />
@@ -45,7 +45,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="Daily"
+                android:text="@string/daily_statistic"
                 android:textSize="20sp" />
         </RelativeLayout>
 
@@ -60,7 +60,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="Monthly"
+                android:text="@string/monthly_statistic"
                 android:textSize="20sp" />
         </RelativeLayout>
 
@@ -77,7 +77,7 @@
                 android:layout_alignParentStart="true"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="Yearly"
+                android:text="@string/yearly_statistic"
                 android:textSize="20sp" />
         </RelativeLayout>
     </LinearLayout>

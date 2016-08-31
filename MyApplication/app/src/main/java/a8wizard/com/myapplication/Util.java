@@ -73,11 +73,8 @@ public class Util {
 
         BudgetItem budget = helper.getDetailBudget(idBudget);
 
-        if ((Long.parseLong(budget.getLeft()) - amount) > 0) {
-            return true;
-        }
+        return (Long.parseLong(budget.getLeft()) - amount) > 0;
 
-        return false;
     }
 
     public static void colorizeFocusItem(boolean focus, View view) {
@@ -106,28 +103,6 @@ public class Util {
 
     }
 
-    public static void updateWidget(Context context) {
-        SQLHelper helper = new SQLHelper(context);
-        AppWidgetManager appWidgetManager = AppWidgetManager
-                .getInstance(context);
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
-                R.layout.widget_layout);
-        ComponentName thisWidget = new ComponentName(context,
-                MyWidgetProvider.class);
-
-        remoteViews.setTextViewText(R.id.time_row, "Sisa budget");
-        remoteViews.setTextViewText(R.id.description_row, Util.formatUSD(helper
-                .getDetailLastBudget().getLeft()));
-        remoteViews.setTextViewText(R.id.bill_row, Util.getDateString(helper
-                        .getDetailLastBudget().getTimeStartDate(),
-                new SimpleDateFormat("dd/MM/yyyy kk:mm:ss")));
-        remoteViews.setTextViewText(R.id.textView4, Util.getDateString(helper
-                        .getDetailLastBudget().getTimeEndDate(),
-                new SimpleDateFormat("dd/MM/yyyy kk:mm:ss")));
-
-        appWidgetManager.updateAppWidget(thisWidget, remoteViews);
-
-    }
 
     public static Date addMonths(Date date, int month) {
         Calendar cal = Calendar.getInstance();

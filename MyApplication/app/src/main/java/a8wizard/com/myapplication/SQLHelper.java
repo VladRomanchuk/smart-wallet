@@ -56,11 +56,9 @@ public class SQLHelper extends SQLiteOpenHelper {
     public BudgetItem getDetailBudget(int idBudget) {
         String query = "select * from tbl_budget where idBudget=" + idBudget;
 
-        // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
         BudgetItem budget = null;
         if (cursor.moveToFirst()) {
             do {
@@ -81,8 +79,7 @@ public class SQLHelper extends SQLiteOpenHelper {
     public void updateBudgetByDate(String tgl, double amount) {
         ArrayList<BudgetItem> budgets = getAllBudget();
 
-        long tglTime = Util.getTimeStamp(tgl, new SimpleDateFormat(
-                "dd/MM/yyyy kk:mm:ss"));
+        long tglTime = Util.getTimeStamp(tgl, new SimpleDateFormat( "dd/MM/yyyy kk:mm:ss"));
 
         for (int i = 0; i < budgets.size(); i++) {
             if (Util.checkTransactionDateInBudget(tglTime, budgets.get(i))) {
@@ -96,9 +93,7 @@ public class SQLHelper extends SQLiteOpenHelper {
                     updateBudgetSum(budgets.get(i).getIdBudget(), amount);
 
                 }
-
-                Toast.makeText(context, "BudgetItem has been updated",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Budget has been updated", Toast.LENGTH_SHORT).show();
                 break;
             }
 
@@ -129,8 +124,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 
         }
         if (trans.size() > 0)
-            Toast.makeText(context, "BudgetItem has been updated", Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(context, "Budget has been updated", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -163,7 +157,6 @@ public class SQLHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        // values.put("idTransaksi", "");
         values.put("startDate", budget.getStartDate());
         values.put("endDate", budget.getEndDate());
         values.put("category", budget.getCategory());
@@ -172,26 +165,20 @@ public class SQLHelper extends SQLiteOpenHelper {
         values.put("timeStartDate", budget.getTimeStartDate());
         values.put("timeEndDate", budget.getTimeEndDate());
         db.insert(TBL_BUDGET, null, values);
-        Toast.makeText(context, "BudgetItem has been set", Toast.LENGTH_SHORT)
+        Toast.makeText(context, "Budget has been set", Toast.LENGTH_SHORT)
                 .show();
-        if (Util.checkBudget(context))
-            Util.updateWidget(context);
-
         db.close();
 
     }
 
     public ArrayList<BudgetItem> getAllBudget() {
         ArrayList<BudgetItem> budgets = new ArrayList<BudgetItem>();
-        // 1. build the query
-        // String query = "select * from tbl_friendlist";
 
         String query = "select * from tbl_budget order by idBudget asc";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
         BudgetItem budget = null;
         if (cursor.moveToFirst()) {
             do {
@@ -217,7 +204,6 @@ public class SQLHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
         BudgetItem budget = null;
         if (cursor.moveToFirst()) {
             do {
@@ -237,15 +223,12 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     public ArrayList<BudgetItem> getAllMonthlyBudget() {
         ArrayList<BudgetItem> budgets = new ArrayList<BudgetItem>();
-        // 1. build the query
-        // String query = "select * from tbl_friendlist";
 
         String query = "select * from tbl_budget where category='Monthly' order by idBudget asc";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
         BudgetItem budget = null;
         if (cursor.moveToFirst()) {
             do {
@@ -265,46 +248,32 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     public void deleteBudget(int idBudget) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Toast.makeText(context, "Last budget has been deleted", Toast.LENGTH_SHORT)
-                .show();
+        Toast.makeText(context, "Last budget has been deleted", Toast.LENGTH_SHORT).show();
         db.execSQL("delete from tbl_budget where idBudget='" + idBudget + "'");
-        if (Util.checkBudget(context))
-            Util.updateWidget(context);
+
 
     }
 
     public void updateBudgetDifference(int idBudget, double amount) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        db.execSQL("update tbl_budget set left=left-" + amount + " where idBudget=" + idBudget + "");
 
-        db.execSQL("update tbl_budget set left=left-" + amount
-                + " where idBudget=" + idBudget + "");
-        if (Util.checkBudget(context))
-            Util.updateWidget(context);
     }
 
 
     public void updateBudgetSum(int idBudget, double amount) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("update tbl_budget set left=left+" + amount
-                + " where idBudget=" + idBudget + "");
-        if (Util.checkBudget(context))
-            Util.updateWidget(context);
+        db.execSQL("update tbl_budget set left=left+" + amount + " where idBudget=" + idBudget + "");
     }
 
     public TransactionItem getDetailTransactions(int idTransaksi) {
 
-        // 1. build the query
-        // String query = "select * from tbl_friendlist";
+        String query = "select * from tbl_transactions where idTransactions=" + idTransaksi;
 
-        String query = "select * from tbl_transactions where idTransactions="
-                + idTransaksi;
-
-        // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
         TransactionItem trans = null;
         if (cursor.moveToFirst()) {
             do {
@@ -326,7 +295,6 @@ public class SQLHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
         HistoryItem hist = null;
         if (cursor.moveToFirst()) {
             do {
@@ -348,7 +316,6 @@ public class SQLHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
         HistoryItem hist = null;
         if (cursor.moveToFirst()) {
             do {
@@ -365,19 +332,12 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     public ArrayList<HistoryItem> getAllMonthlyHistory() {
         ArrayList<HistoryItem> history = new ArrayList<HistoryItem>();
-        // 1. build the query
-        // String query = "select * from tbl_friendlist";
 
-        //*** FYI ***
-        //sum means sum
         String query = "select distinct substr(data,4) data, sum(price) total, count(*) sum from tbl_transactions GROUP BY data order by time asc";
-        // String query =
-        // "select distinct strftime('%d-%m-%Y', data / 1000, 'unixepoch') data, sum(price) total, count(*) sum from tbl_transaksi GROUP BY data order by data asc";
-        // 2. get reference to writable DB
+
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
         HistoryItem hist = null;
         if (cursor.moveToFirst()) {
             do {
@@ -426,8 +386,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         values.put("data", transactionItem.getDate());
         values.put("time", transactionItem.getTime());
         db.insert(TBL_TRANSACTIONS, null, values);
-        Toast.makeText(context, "TransactionItem has been added ",
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Transaction has been added ", Toast.LENGTH_SHORT).show();
 
         db.close();
     }
@@ -435,17 +394,11 @@ public class SQLHelper extends SQLiteOpenHelper {
     public ArrayList<TransactionItem> getAllTransactionByTanggal(String data) {
         ArrayList<TransactionItem> transaction = new ArrayList<TransactionItem>();
 
-        // 1. build the query
-        // String query = "select * from tbl_friendlist";
+        String query = "select * from tbl_transactions where data='" + data + "' order by clock asc";
 
-        String query = "select * from tbl_transactions where data='" + data
-                + "' order by clock asc";
-
-        // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
         TransactionItem trans = null;
         if (cursor.moveToFirst()) {
             do {
@@ -465,16 +418,14 @@ public class SQLHelper extends SQLiteOpenHelper {
     public void deleteTransaction(int idTransaction) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from tbl_transactions where idTransactions=" + idTransaction);
-        Toast.makeText(context, "TransactionItem has been deleted",
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Transaction has been deleted", Toast.LENGTH_SHORT).show();
 
     }
 
     public void deleteHistory(String data) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from tbl_transactions where data='" + data + "'");
-        Toast.makeText(context, "HistoryItem has been deleted", Toast.LENGTH_SHORT)
-                .show();
+        Toast.makeText(context, "History has been deleted", Toast.LENGTH_SHORT).show();
     }
 
     public void updateTransaction(TransactionItem transactionItem) {
@@ -484,13 +435,12 @@ public class SQLHelper extends SQLiteOpenHelper {
                 + transactionItem.getPrice() + "',description='"
                 + transactionItem.getDescription() + "',time='" + transactionItem.getTime()
                 + "' where idTransactions='" + transactionItem.getIdTransaction() + "'");
-        Toast.makeText(context, "TransactionItem has been edited", Toast.LENGTH_SHORT)
+        Toast.makeText(context, "Transaction has been edited", Toast.LENGTH_SHORT)
                 .show();
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
         this.onCreate(db);
     }
 

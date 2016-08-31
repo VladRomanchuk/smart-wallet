@@ -67,11 +67,7 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
     private void colorizeFocusItem(boolean focus, View view) {
 
         InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (manager.isAcceptingText()) {
-            focus = true;
-        } else {
-            focus = false;
-        }
+        focus = manager.isAcceptingText();
         if (focus) {
             view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
         } else {
@@ -108,7 +104,7 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
             case R.id.add_new_transaction:
                 if (!isEditTextEmpty(binding.transactionPriceInputText, binding.transactionDescriptionInputText)) {
                     addTransaction();
-                    Animation clear = AnimationUtils.loadAnimation(getActivity(), R.anim.alpha);
+                    Animation clear = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
                     binding.transactionLayout.startAnimation(clear);
                     binding.transactionPriceInputText.setText("");
                     binding.transactionDescriptionInputText.setText("");
