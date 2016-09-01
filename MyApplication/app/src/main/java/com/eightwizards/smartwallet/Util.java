@@ -1,11 +1,8 @@
-package a8wizard.com.myapplication;
+package com.eightwizards.smartwallet;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.RemoteViews;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

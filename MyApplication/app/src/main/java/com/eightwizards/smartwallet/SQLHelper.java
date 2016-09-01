@@ -1,19 +1,18 @@
-package a8wizard.com.myapplication;
+package com.eightwizards.smartwallet;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import a8wizard.com.myapplication.history.HistoryItem;
-import a8wizard.com.myapplication.transactions.TransactionItem;
+import com.eightwizards.smartwallet.history.HistoryItem;
+import com.eightwizards.smartwallet.transactions.TransactionItem;
 
 public class SQLHelper extends SQLiteOpenHelper {
 

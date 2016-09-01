@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication;
+package com.eightwizards.smartwallet;
 
 import android.app.AlertDialog;
 import android.net.ParseException;
@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,9 +27,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import a8wizard.com.myapplication.history.HistoryFragment;
-import a8wizard.com.myapplication.statistic.StatisticFragment;
-import a8wizard.com.myapplication.transactions.AddTransactionFragment;
+import com.eightwizards.smartwallet.history.HistoryFragment;
+import com.eightwizards.smartwallet.statistic.StatisticFragment;
+import com.eightwizards.smartwallet.transactions.AddTransactionFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -109,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 f = getSupportFragmentManager().findFragmentByTag("AddTransactionFragment");
                 if (f != null && f instanceof AddTransactionFragment) {
                 } else {
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+                    view.startAnimation(animation);
                     showTransactionScreen();
                 }
                 break;
@@ -116,6 +120,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 f = getSupportFragmentManager().findFragmentByTag("HistoryFragment");
                 if (f != null && f instanceof HistoryFragment) {
                 } else {
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+                    view.startAnimation(animation);
                     showHistoryScreen();
                 }
                 break;
@@ -123,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 f = getSupportFragmentManager().findFragmentByTag("StatisticFragment");
                 if (f != null && f instanceof StatisticFragment) {
                 } else {
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+                    view.startAnimation(animation);
                     showStatisticScreen();
                 }
                 break;

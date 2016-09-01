@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication.transactions;
+package com.eightwizards.smartwallet.transactions;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -27,11 +27,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import a8wizard.com.myapplication.MainActivity;
-import a8wizard.com.myapplication.R;
-import a8wizard.com.myapplication.SQLHelper;
-import a8wizard.com.myapplication.Util;
-import a8wizard.com.myapplication.history.HistoryFragment;
+import com.eightwizards.smartwallet.MainActivity;
+import com.eightwizards.smartwallet.R;
+import com.eightwizards.smartwallet.SQLHelper;
+import com.eightwizards.smartwallet.Util;
+import com.eightwizards.smartwallet.history.HistoryFragment;
 
 public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
         Filterable, TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {

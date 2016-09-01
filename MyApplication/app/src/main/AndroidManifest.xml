@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="a8wizard.com.myapplication">
+    package="com.eightwizards.smartwallet">
 
     <application
         android:allowBackup="true"
@@ -8,21 +8,15 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
-        <activity android:name=".SplashActivity">
+        <activity android:name="com.eightwizards.smartwallet.MainActivity"/>
+        <activity android:name="com.eightwizards.smartwallet.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".intro.IntroScreenActivity">
+        <activity android:name="com.eightwizards.smartwallet.intro.IntroScreenActivity">
 
         </activity>
 

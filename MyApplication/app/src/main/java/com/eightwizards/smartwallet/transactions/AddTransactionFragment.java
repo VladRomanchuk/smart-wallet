@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication.transactions;
+package com.eightwizards.smartwallet.transactions;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -23,10 +23,10 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import a8wizard.com.myapplication.R;
-import a8wizard.com.myapplication.SQLHelper;
-import a8wizard.com.myapplication.Util;
-import a8wizard.com.myapplication.databinding.FragmentTransactionAddBinding;
+import com.eightwizards.smartwallet.R;
+import com.eightwizards.smartwallet.SQLHelper;
+import com.eightwizards.smartwallet.Util;
+import com.eightwizards.smartwallet.databinding.FragmentTransactionAddBinding;
 
 public class AddTransactionFragment extends Fragment implements View.OnClickListener,
         TimePickerDialog.OnTimeSetListener,

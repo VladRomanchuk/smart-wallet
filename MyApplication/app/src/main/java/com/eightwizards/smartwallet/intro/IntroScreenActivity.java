@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication.intro;
+package com.eightwizards.smartwallet.intro;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,13 +10,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.github.paolorotolo.appintro.AppIntro;
 
-import a8wizard.com.myapplication.MainActivity;
-import a8wizard.com.myapplication.R;
+import com.eightwizards.smartwallet.MainActivity;
+import com.eightwizards.smartwallet.R;
 
 public class IntroScreenActivity extends AppIntro {
 

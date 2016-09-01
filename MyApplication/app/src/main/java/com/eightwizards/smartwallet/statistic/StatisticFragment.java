@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication.statistic;
+package com.eightwizards.smartwallet.statistic;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,22 +14,19 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import a8wizard.com.myapplication.R;
-import a8wizard.com.myapplication.SQLHelper;
-import a8wizard.com.myapplication.history.HistoryItem;
+import com.eightwizards.smartwallet.R;
+import com.eightwizards.smartwallet.SQLHelper;
+import com.eightwizards.smartwallet.history.HistoryItem;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.ChartData;
 import lecho.lib.hellocharts.model.Column;
 import lecho.lib.hellocharts.model.ColumnChartData;
 import lecho.lib.hellocharts.model.ComboLineColumnChartData;
@@ -37,7 +34,6 @@ import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.SubcolumnValue;
-import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.ComboLineColumnChartView;
 
 public class StatisticFragment extends Fragment implements View.OnClickListener {

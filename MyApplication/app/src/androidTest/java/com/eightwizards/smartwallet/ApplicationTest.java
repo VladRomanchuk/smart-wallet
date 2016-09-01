@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication;
+package com.eightwizards.smartwallet;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication.intro;
+package com.eightwizards.smartwallet.intro;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import a8wizard.com.myapplication.R;
+import com.eightwizards.smartwallet.R;
 
 public class IntroFragment extends Fragment {
 

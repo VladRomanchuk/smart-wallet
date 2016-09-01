@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorItems"
         android:hint="@string/set_budget"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorButtonTransactions"
-            android:text="@string/cancel"
+            android:text="@string/cancel_dialog_delete"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication.budget;
+package com.eightwizards.smartwallet.budget;
 
 
 import android.content.Context;
@@ -13,9 +13,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import a8wizard.com.myapplication.R;
-import a8wizard.com.myapplication.Util;
-import a8wizard.com.myapplication.BudgetItem;
+import com.eightwizards.smartwallet.R;
+import com.eightwizards.smartwallet.Util;
+import com.eightwizards.smartwallet.BudgetItem;
 
 public class BudgetAdapter extends ArrayAdapter<BudgetItem> implements Filterable {
 

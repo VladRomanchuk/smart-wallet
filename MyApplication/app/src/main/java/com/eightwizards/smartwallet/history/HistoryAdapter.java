@@ -1,8 +1,7 @@
-package a8wizard.com.myapplication.history;
+package com.eightwizards.smartwallet.history;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -21,11 +20,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import a8wizard.com.myapplication.R;
-import a8wizard.com.myapplication.SQLHelper;
-import a8wizard.com.myapplication.Util;
-import a8wizard.com.myapplication.transactions.TransactionAdapter;
-import a8wizard.com.myapplication.transactions.TransactionItem;
+import com.eightwizards.smartwallet.R;
+import com.eightwizards.smartwallet.SQLHelper;
+import com.eightwizards.smartwallet.Util;
+import com.eightwizards.smartwallet.transactions.TransactionAdapter;
+import com.eightwizards.smartwallet.transactions.TransactionItem;
 
 public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filterable {
 

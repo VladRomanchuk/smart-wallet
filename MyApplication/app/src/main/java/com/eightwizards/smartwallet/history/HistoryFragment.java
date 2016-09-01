@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication.history;
+package com.eightwizards.smartwallet.history;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.databinding.DataBindingUtil;
@@ -20,10 +20,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import a8wizard.com.myapplication.R;
-import a8wizard.com.myapplication.SQLHelper;
-import a8wizard.com.myapplication.databinding.FragmentHistoryBinding;
-import a8wizard.com.myapplication.transactions.TransactionAdapter;
+import com.eightwizards.smartwallet.R;
+import com.eightwizards.smartwallet.SQLHelper;
+import com.eightwizards.smartwallet.databinding.FragmentHistoryBinding;
+import com.eightwizards.smartwallet.transactions.TransactionAdapter;
 
 public class HistoryFragment extends Fragment implements View.OnClickListener {
 

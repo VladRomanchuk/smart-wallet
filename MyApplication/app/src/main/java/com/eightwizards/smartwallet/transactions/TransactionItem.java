@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication.transactions;
+package com.eightwizards.smartwallet.transactions;
 
 public class TransactionItem {
 	private int idTransaction;

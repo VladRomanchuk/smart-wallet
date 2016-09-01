@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication;
+package com.eightwizards.smartwallet;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import a8wizard.com.myapplication.intro.IntroScreenActivity;
+import com.eightwizards.smartwallet.intro.IntroScreenActivity;
 
 public class SplashActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {

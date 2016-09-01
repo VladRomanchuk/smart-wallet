@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication.history;
+package com.eightwizards.smartwallet.history;
 
 public class HistoryItem {
 	private String date;

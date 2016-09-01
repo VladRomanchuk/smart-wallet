@@ -1,4 +1,4 @@
-package a8wizard.com.myapplication;
+package com.eightwizards.smartwallet;
 
 public class BudgetItem {
     private int idBudget;
