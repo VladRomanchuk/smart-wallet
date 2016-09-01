@@ -204,15 +204,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showStatisticScreen() {
-        showScreen(new StatisticFragment(), StatisticFragment.TAG, false);
-        findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.white));
-
         HistoryFragment historyFragment = new HistoryFragment();
         AddTransactionFragment addTransactionFragment = new AddTransactionFragment();
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.remove(historyFragment);
         transaction.remove(addTransactionFragment);
+
+
+        showScreen(new StatisticFragment(), StatisticFragment.TAG, false);
+        findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.white));
+
 
         tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
         tabHistoryLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));

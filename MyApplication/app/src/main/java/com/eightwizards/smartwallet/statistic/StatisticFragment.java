@@ -94,10 +94,10 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        Fragment f;
         switch (view.getId()) {
             case R.id.dailyLayout:
                 if (!headerView.getText().equals(getResources().getString(R.string.title_statistic_day))) {
+                    containerChart.destroyDrawingCache();
                     showDayStatistic(view);
                 }
                 break;

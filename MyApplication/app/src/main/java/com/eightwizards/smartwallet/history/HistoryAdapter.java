@@ -85,8 +85,6 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> implements Filtera
                 HistoryFragment.listItem.setAnimation(itemClick);
                 HistoryFragment.transactionAdapter = new TransactionAdapter(context, listTransaction);
 
-
-
                 HistoryFragment.listItem.setAdapter(HistoryFragment.transactionAdapter);
                 HistoryFragment.adapterStatus = 2;
 

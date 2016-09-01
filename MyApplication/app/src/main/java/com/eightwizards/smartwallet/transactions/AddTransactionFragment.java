@@ -143,7 +143,7 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
         helper.addTransaction(transactionItem);
         helper.updateBudgetByDate(binding.transactionDatePickerTextView.getText().toString() +
                         binding.transactionTimePickerTextView.getText().toString(),
-                Long.parseLong(binding.transactionPriceInputText.getText().toString()) * (-1));
+                Double.parseDouble(binding.transactionPriceInputText.getText().toString()) * (-1));
 
     }
 
