@@ -41,10 +41,6 @@ public class Util {
         return "$" + hasil;
     }
 
-//    public static void refreshTimePickerAtAddTransactionFragment(){
-//        AddTransactionFragment.transactionDatePickerTextView.setText(new SimpleDateFormat("kk:mm:ss").format(new Date()));
-//        //AddTransactionFragment.bDatePicker.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-//    }
 
     public static boolean checkTransactionDateInBudget(long tglTime, BudgetItem budget) {
 
@@ -99,7 +95,6 @@ public class Util {
         }
 
     }
-
 
     public static Date addMonths(Date date, int month) {
         Calendar cal = Calendar.getInstance();

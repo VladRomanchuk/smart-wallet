@@ -133,7 +133,7 @@
 
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/set_budget_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -141,7 +141,7 @@
             android:text="@string/back_budget"
             android:textColor="@android:color/white" />
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/cancel_budget_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

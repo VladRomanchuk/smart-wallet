@@ -34,11 +34,26 @@ import com.eightwizards.smartwallet.transactions.AddTransactionFragment;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
-    private TextView toolbarTextView;
 
+    public EditText setBudgetEditText;
     private LinearLayout tabAddNewTransactionLayout;
     private LinearLayout tabHistoryLayout;
     private LinearLayout tabStatisticLayout;
+
+    public Spinner spinner;
+    public Spinner spinner2;
+    public Button setButton;
+    public Button bCancel;
+    public Button bReset;
+    public Button cancelButton;
+
+    private TextView toolbarTextView;
+
+    public TextView tStartDate;
+    public TextView tEndDate;
+    public TextView tCategory;
+    public TextView tAmount;
+    public TextView tLeft;
 
     private SQLHelper helper;
 
@@ -53,10 +68,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         defineTabs();
         setupTabs();
 
-        helper = new SQLHelper(MainActivity.this);
-
+        initSQLHelper();
         showTransactionScreen();
 
+    }
+
+    private void initSQLHelper() {
+        helper = new SQLHelper(MainActivity.this);
     }
 
     private void setupTabs() {
@@ -111,8 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 f = getSupportFragmentManager().findFragmentByTag("AddTransactionFragment");
                 if (f != null && f instanceof AddTransactionFragment) {
                 } else {
-                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
-                    view.startAnimation(animation);
+                    animationTab(view);
                     showTransactionScreen();
                 }
                 break;
@@ -120,8 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 f = getSupportFragmentManager().findFragmentByTag("HistoryFragment");
                 if (f != null && f instanceof HistoryFragment) {
                 } else {
-                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
-                    view.startAnimation(animation);
+                    animationTab(view);
                     showHistoryScreen();
                 }
                 break;
@@ -129,12 +145,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 f = getSupportFragmentManager().findFragmentByTag("StatisticFragment");
                 if (f != null && f instanceof StatisticFragment) {
                 } else {
-                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
-                    view.startAnimation(animation);
+                    animationTab(view);
                     showStatisticScreen();
                 }
                 break;
         }
+    }
+
+    private void animationTab(View view) {
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+        view.startAnimation(animation);
     }
 
     public void showScreen(Fragment fragment, String contentTag, boolean addToBackStack) {
@@ -151,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void showTransactionScreen() {
         showScreen(new AddTransactionFragment(), AddTransactionFragment.TAG, false);
         findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorItems));
+
         tabAddNewTransactionLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
         tabHistoryLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
@@ -160,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void showHistoryScreen() {
         showScreen(new HistoryFragment(), HistoryFragment.TAG, false);
         findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.white));
+
         tabHistoryLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
         tabAddNewTransactionLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
@@ -169,34 +191,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void showStatisticScreen() {
         showScreen(new StatisticFragment(), StatisticFragment.TAG, false);
         findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.white));
+
         tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
         tabHistoryLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         tabAddNewTransactionLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         toolbarTextView.setText("Statistic");
     }
 
-    private void setTextToolbar(String toolbarText) {
-        toolbarTextView.setText(toolbarText);
-    }
+    private void defineDialogView(View view) {
+        setBudgetEditText = (EditText) view.findViewById(R.id.set_budget_edit_text);
+        spinner = (Spinner) view.findViewById(R.id.spinner);
+        spinner2 = (Spinner) view.findViewById(R.id.spinner2);
 
+        setButton = (Button) view.findViewById(R.id.set_budget_button);
+        cancelButton = (Button) view.findViewById(R.id.cancel_budget_button);
+
+    }
 
     public void showAlertInsertBudget() {
 
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-        View dialogview = inflater.inflate(R.layout.alertdialog_insertbudget, null);
+        View dialogView = inflater.inflate(R.layout.alertdialog_insertbudget, null);
         final AlertDialog alert = new AlertDialog.Builder(MainActivity.this).create();
-        alert.setView(dialogview);
+        alert.setView(dialogView);
+        defineDialogView(dialogView);
 
-        final EditText eSetBudget = (EditText) dialogview.findViewById(R.id.editText1);
-        Button bSet = (Button) dialogview.findViewById(R.id.button1);
-        Button bCancel = (Button) dialogview.findViewById(R.id.button2);
-
-        final Spinner spinner = (Spinner) dialogview.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.category_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        final Spinner spinner2 = (Spinner) dialogview.findViewById(R.id.spinner2);
         ArrayList<String> list = new ArrayList<String>();
 
         list.add("Time start:");
@@ -207,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(dataAdapter);
 
-        bSet.setOnClickListener(new View.OnClickListener() {
+        setButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
@@ -218,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Date endDate = sdf.parse(spinner2.getSelectedItem().toString());
 
                     if (spinner.getSelectedItem().toString().equals("Choose your category:") ||
-                            spinner2.getSelectedItem().toString().equals("Time start:") || eSetBudget.getText().toString().equals("")) {
+                            spinner2.getSelectedItem().toString().equals("Time start:") || setBudgetEditText.getText().toString().equals("")) {
                         Toast.makeText(MainActivity.this,
                                 "Please fill all forms", Toast.LENGTH_SHORT).show();
                     } else {
@@ -229,12 +252,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             endDate = Util.addMonths(startDate, 1);
                         }
 
-                        BudgetItem budget = new BudgetItem(0, (
-                                new SimpleDateFormat("dd/MM/yyyy")).format(startDate),
+                        BudgetItem budget = new BudgetItem(0, (new SimpleDateFormat("dd/MM/yyyy")).format(startDate),
                                 (new SimpleDateFormat("dd/MM/yyyy")).format(endDate),
                                 spinner.getSelectedItem().toString(),
-                                eSetBudget.getText().toString(),
-                                eSetBudget.getText().toString(),
+                                setBudgetEditText.getText().toString(),
+                                setBudgetEditText.getText().toString(),
                                 startDate.getTime(), endDate.getTime());
 
 
@@ -247,15 +269,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } catch (java.text.ParseException e) {
 
                 }
-
             }
         });
 
-        bCancel.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                // TODO Auto-generated method stub
                 alert.dismiss();
             }
         });
@@ -266,19 +286,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void showAlertInfoBudget() {
 
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-        View dialogview = inflater.inflate(R.layout.alertdialog_infobudget, null);
+        View dialogView = inflater.inflate(R.layout.alertdialog_infobudget, null);
         final AlertDialog alert = new AlertDialog.Builder(MainActivity.this).create();
         alert.setCancelable(false);
 
         final BudgetItem budget = helper.getDetailLastBudget();
 
-        TextView tStartDate = (TextView) dialogview.findViewById(R.id.textView2);
-        TextView tEndDate = (TextView) dialogview.findViewById(R.id.textView3);
-        TextView tCategory = (TextView) dialogview.findViewById(R.id.textView4);
-        TextView tAmount = (TextView) dialogview.findViewById(R.id.textView5);
-        TextView tLeft = (TextView) dialogview.findViewById(R.id.textView6);
-        Button bCancel = (Button) dialogview.findViewById(R.id.button1);
-        Button bReset = (Button) dialogview.findViewById(R.id.button2);
+        defineViewDialog(dialogView);
 
         tStartDate.setText(Util.getDateString(budget.getTimeStartDate(), new SimpleDateFormat("dd/MM/yy kk:mm:ss")));
         tEndDate.setText(Util.getDateString(budget.getTimeEndDate(), new SimpleDateFormat("dd/MM/yy kk:mm:ss")));
@@ -290,7 +304,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 alert.dismiss();
                 helper.deleteBudget(budget.getIdBudget());
                 showAlertInsertBudget();
@@ -305,8 +318,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        alert.setView(dialogview);
+        alert.setView(dialogView);
         alert.show();
+    }
+
+    private void defineViewDialog(View view) {
+
+        tStartDate = (TextView) view.findViewById(R.id.textView2);
+        tEndDate = (TextView) view.findViewById(R.id.textView3);
+        tCategory = (TextView) view.findViewById(R.id.textView4);
+        tAmount = (TextView) view.findViewById(R.id.textView5);
+        tLeft = (TextView) view.findViewById(R.id.textView6);
+        bCancel = (Button) view.findViewById(R.id.set_budget_button);
+        bReset = (Button) view.findViewById(R.id.cancel_budget_button);
     }
 
 }
