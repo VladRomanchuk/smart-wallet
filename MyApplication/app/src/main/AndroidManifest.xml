@@ -8,16 +8,20 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.eightwizards.smartwallet.MainActivity"/>
-        <activity android:name="com.eightwizards.smartwallet.SplashActivity">
+        <activity
+            android:name="com.eightwizards.smartwallet.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.eightwizards.smartwallet.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.eightwizards.smartwallet.intro.IntroScreenActivity">
-
+        <activity
+            android:name="com.eightwizards.smartwallet.intro.IntroScreenActivity"
+            android:screenOrientation="portrait">
         </activity>
 
     </application>

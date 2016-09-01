@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ import java.util.List;
 import com.eightwizards.smartwallet.R;
 import com.eightwizards.smartwallet.SQLHelper;
 import com.eightwizards.smartwallet.history.HistoryItem;
+import com.eightwizards.smartwallet.transactions.AddTransactionFragment;
+
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Column;
@@ -51,23 +54,24 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
     private Calendar calendar;
     private static FrameLayout containerChart;
     private static ArrayList<HistoryItem> listHistory = new ArrayList<HistoryItem>();
+    View layoutView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_statistic, container, false);
+        layoutView = inflater.inflate(R.layout.fragment_statistic, container, false);
 
         calendar = Calendar.getInstance();
         helper = new SQLHelper(getActivity());
 
-        defineLayout(view);
-        defineView(view);
+        defineLayout(layoutView);
+        defineView(layoutView);
 
         setupLayout();
-        showDayStatistic(view);
+        showDayStatistic(layoutView);
 
-        return view;
+        return layoutView;
     }
 
     private void defineView(View view) {
@@ -90,18 +94,25 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+        Fragment f;
         switch (view.getId()) {
             case R.id.dailyLayout:
-                showDayStatistic(view);
+                if (!headerView.getText().equals(getResources().getString(R.string.title_statistic_day))) {
+                    showDayStatistic(view);
+                }
                 break;
             case R.id.monthlyLayout:
-                showMonthlyStatistic(view);
+                if (!headerView.getText().equals(new SimpleDateFormat("MMMM").format(calendar.getTime()) + ", " + calendar.get(Calendar.YEAR))) {
+                    showMonthlyStatistic(view);
+                }
                 break;
             case R.id.yearlyLayout:
-                showYearlyStatistic(view);
+                if (!headerView.getText().equals(calendar.get(Calendar.YEAR) + "")) {
+                    showYearlyStatistic(view);
+                }
                 break;
-        }
 
+        }
     }
 
     private void showYearlyStatistic(View view) {

@@ -58,6 +58,12 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
         return binding.getRoot();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
+
     private void editTextFocusListenerSetup() {
         binding.transactionPriceInputText.setOnFocusChangeListener(this);
         binding.transactionDescriptionInputText.setOnFocusChangeListener(this);
@@ -137,7 +143,7 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
         helper.addTransaction(transactionItem);
         helper.updateBudgetByDate(binding.transactionDatePickerTextView.getText().toString() +
                         binding.transactionTimePickerTextView.getText().toString(),
-                Double.parseDouble(binding.transactionPriceInputText.getText().toString()) * (-1));
+                Long.parseLong(binding.transactionPriceInputText.getText().toString()) * (-1));
 
     }
 
@@ -151,14 +157,13 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
         binding.transactionDatePickerTextView.setText(date);
     }
 
-    public boolean isEditTextEmpty(EditText fField, EditText sField) {
+    public boolean isEditTextEmpty(EditText price, EditText description) {
         boolean isEditTextEmpty;
-        if ((fField.getText().length() == 0)) {
-            fField.setError("Must be fill.");
+        if (price.getText().length() == 0) {
+            price.setError("Must be fill.");
             isEditTextEmpty = true;
-        }
-        if ((sField.getText().length() == 0)) {
-            sField.setError("Must be fill.");
+        } else if ((description.getText().length() == 0)) {
+            description.setError("Must be fill.");
             isEditTextEmpty = true;
         } else {
             isEditTextEmpty = false;
