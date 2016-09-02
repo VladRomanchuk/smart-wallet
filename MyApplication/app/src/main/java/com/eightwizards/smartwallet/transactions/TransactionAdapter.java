@@ -221,10 +221,10 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                                                         + " " + transaksi.getTime(),
                                                 new SimpleDateFormat("dd/MM/yyyy kk:mm:ss")));
                                 int idBudgetAfter = helper.getIdBudgetByDateTransaction(Util.getTimeStamp(bDatePicker.getText()
-                                                .toString()
-                                                + " "
-                                                + bTimePicker.getText()
-                                                .toString(), new SimpleDateFormat("dd/MM/yyyy kk:mm:ss")));
+                                        .toString()
+                                        + " "
+                                        + bTimePicker.getText()
+                                        .toString(), new SimpleDateFormat("dd/MM/yyyy kk:mm:ss")));
 
                                 if ((idBudgetBefore != idBudgetAfter)) {
                                     helper.updateBudgetSum(idBudgetBefore, Long
@@ -245,31 +245,33 @@ public class TransactionAdapter extends ArrayAdapter<TransactionItem> implements
                                 ArrayList<TransactionItem> listTransaksi = new ArrayList<TransactionItem>();
                                 TransactionAdapter adapterTransaksi;
                                 AddTransactionFragment addTransactionFragment = new AddTransactionFragment();
-                                if (!addTransactionFragment.isEditTextEmpty(eDescription, ePrice)) {
+                                if (!ePrice.getText().toString().isEmpty()) {
+                                    char c = ePrice.getText().toString().charAt(0);
+                                    if (!addTransactionFragment.isEditTextEmpty(eDescription, ePrice) && !(c == '.')) {
 
 
-                                    TransactionItem transaksiUpdate = new TransactionItem(
-                                            itemsArrayList.get(position).getIdTransaction(),
-                                            eDescription.getText().toString(),
-                                            ePrice.getText().toString(),
-                                            bTimePicker.getText().toString(),
-                                            bDatePicker.getText().toString(),
-                                            Util.getTimeStamp(bTimePicker.getText().toString(), new SimpleDateFormat("HH:mm")));
-                                    helper.updateTransaction(transaksiUpdate);
+                                        TransactionItem transaksiUpdate = new TransactionItem(
+                                                itemsArrayList.get(position).getIdTransaction(),
+                                                eDescription.getText().toString(),
+                                                ePrice.getText().toString(),
+                                                bTimePicker.getText().toString(),
+                                                bDatePicker.getText().toString(),
+                                                Util.getTimeStamp(bTimePicker.getText().toString(), new SimpleDateFormat("HH:mm")));
+                                        helper.updateTransaction(transaksiUpdate);
 
-                                    helper.updateBudgetByDate(bDatePicker.getText().toString() + " " + bTimePicker.getText().toString(),
-                                            tempAmount - Double.parseDouble(ePrice.getText().toString()));
-                                    listTransaksi = helper
-                                            .getAllTransactionByTanggal(itemsArrayList
-                                                    .get(position).getDate());
-                                    adapterTransaksi = new TransactionAdapter(
-                                            context, listTransaksi);
+                                        helper.updateBudgetByDate(bDatePicker.getText().toString() + " " + bTimePicker.getText().toString(),
+                                                tempAmount - Double.parseDouble(ePrice.getText().toString()));
 
-                                    HistoryFragment.listItem
-                                            .setAdapter(adapterTransaksi);
-                                    HistoryFragment.adapterStatus = 2;
-                               
-                                alert.dismiss();
+                                        listTransaksi = helper.getAllTransactionByTanggal(itemsArrayList.get(position).getDate());
+                                        adapterTransaksi = new TransactionAdapter(context, listTransaksi);
+
+                                        HistoryFragment.listItem.setAdapter(adapterTransaksi);
+                                        HistoryFragment.adapterStatus = 2;
+
+                                        alert.dismiss();
+                                    } else {
+                                        Toast.makeText(context, "fields is empty", Toast.LENGTH_SHORT).show();
+                                    }
                                 } else {
                                     Toast.makeText(context, "fields is empty", Toast.LENGTH_SHORT).show();
                                 }
