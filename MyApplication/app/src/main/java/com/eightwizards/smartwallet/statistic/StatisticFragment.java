@@ -103,11 +103,13 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.monthlyLayout:
                 if (!headerView.getText().equals(new SimpleDateFormat("MMMM").format(calendar.getTime()) + ", " + calendar.get(Calendar.YEAR))) {
+                    containerChart.destroyDrawingCache();
                     showMonthlyStatistic(view);
                 }
                 break;
             case R.id.yearlyLayout:
                 if (!headerView.getText().equals(calendar.get(Calendar.YEAR) + "")) {
+                    containerChart.destroyDrawingCache();
                     showYearlyStatistic(view);
                 }
                 break;
@@ -127,7 +129,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
             }
         });
 
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
         headerView.setText(calendar.get(Calendar.YEAR) + "");
         dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
         monthlLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
@@ -146,7 +148,7 @@ public class StatisticFragment extends Fragment implements View.OnClickListener 
                 return historyItem.getDate().compareTo(t1.getDate());
             }
         });
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
         headerView.setVisibility(View.VISIBLE);
         headerView.setText(getResources().getString(R.string.title_statistic_day));
         dayLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
