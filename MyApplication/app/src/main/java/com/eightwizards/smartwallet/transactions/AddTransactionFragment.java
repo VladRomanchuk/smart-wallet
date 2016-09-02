@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
@@ -108,13 +109,20 @@ public class AddTransactionFragment extends Fragment implements View.OnClickList
 
         switch (view.getId()) {
             case R.id.add_new_transaction:
-                if (!isEditTextEmpty(binding.transactionPriceInputText, binding.transactionDescriptionInputText)) {
-                    addTransaction();
-                    Animation clear = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-                    binding.transactionLayout.startAnimation(clear);
-                    binding.transactionPriceInputText.setText("");
-                    binding.transactionDescriptionInputText.setText("");
-                    binding.transactionPriceInputText.requestFocus();
+                if (!binding.transactionPriceInputText.getText().toString().isEmpty()) {
+                    char c = binding.transactionPriceInputText.getText().toString().charAt(0);
+                    if (!(isEditTextEmpty(binding.transactionPriceInputText, binding.transactionDescriptionInputText)) && !(c == '.')) {
+                        addTransaction();
+                        Animation clear = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+                        binding.transactionLayout.startAnimation(clear);
+                        binding.transactionPriceInputText.setText("");
+                        binding.transactionDescriptionInputText.setText("");
+                        binding.transactionPriceInputText.requestFocus();
+                    } else {
+                        Toast.makeText(getActivity(), "field must by filling", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "field must by filling", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.date_picker_layout:

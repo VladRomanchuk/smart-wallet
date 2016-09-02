@@ -169,6 +169,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void showTransactionScreen() {
+        StatisticFragment statisticFragment = new StatisticFragment();
+        HistoryFragment historyFragment = new HistoryFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.remove(statisticFragment);
+        transaction.remove(historyFragment);
+
         showScreen(new AddTransactionFragment(), AddTransactionFragment.TAG, false);
         findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorItems));
 
@@ -177,16 +184,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         toolbarTextView.setText("Add Transaction");
 
-        StatisticFragment statisticFragment = new StatisticFragment();
-        HistoryFragment historyFragment = new HistoryFragment();
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.remove(statisticFragment);
-        transaction.remove(historyFragment);
 
     }
 
     private void showHistoryScreen() {
+        StatisticFragment statisticFragment = new StatisticFragment();
+        AddTransactionFragment addTransactionFragment = new AddTransactionFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.remove(statisticFragment);
+        transaction.remove(addTransactionFragment);
+
         showScreen(new HistoryFragment(), HistoryFragment.TAG, false);
         findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.white));
 
@@ -195,12 +203,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         toolbarTextView.setText("History");
 
-        StatisticFragment statisticFragment = new StatisticFragment();
-        AddTransactionFragment addTransactionFragment = new AddTransactionFragment();
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.remove(statisticFragment);
-        transaction.remove(addTransactionFragment);
     }
 
     private void showStatisticScreen() {
@@ -211,10 +213,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         transaction.remove(historyFragment);
         transaction.remove(addTransactionFragment);
 
-
         showScreen(new StatisticFragment(), StatisticFragment.TAG, false);
         findViewById(R.id.main_layout).setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.white));
-
 
         tabStatisticLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
         tabHistoryLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
@@ -284,7 +284,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 setBudgetEditText.getText().toString(),
                                 startDate.getTime(), endDate.getTime());
 
-
                         helper.addBudget(budget);
 
                         alert.dismiss();
@@ -323,6 +322,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tEndDate.setText(Util.getDateString(budget.getTimeEndDate(), new SimpleDateFormat("dd/MM/yy kk:mm:ss")));
         tCategory.setText(budget.getCategory());
         tAmount.setText(Util.formatUSD(budget.getAmount()));
+
+        Toast.makeText(getApplicationContext(), budget.getLeft(), Toast.LENGTH_SHORT).show();
         tLeft.setText(Util.formatUSD(budget.getLeft()));
 
         bReset.setOnClickListener(new View.OnClickListener() {
